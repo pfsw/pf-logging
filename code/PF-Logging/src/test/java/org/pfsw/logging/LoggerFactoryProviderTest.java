@@ -45,6 +45,14 @@ public class LoggerFactoryProviderTest
     LoggerFactory factory = LoggerFactoryProvider.getLoggerFactory();
     assertEquals(NilLoggerFactory.class.getName(), factory.getClass().getName());
   }  
+  
+  @Test
+  public void test_getLoggerFactory_JUL()
+  {
+    LoggerFactoryProvider.setDefaultFactoryName(LoggerBindingNames.JUL);
+    LoggerFactory factory = LoggerFactoryProvider.getLoggerFactory();
+    assertTrue(factory instanceof JavaUtilLoggerFactory);
+  }  
 
   @Test
   public void test_getLoggerFactory_default_property_binding()

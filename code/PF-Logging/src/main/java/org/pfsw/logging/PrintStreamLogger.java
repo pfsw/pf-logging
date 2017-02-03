@@ -16,9 +16,12 @@ package org.pfsw.logging;
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.text.MessageFormat;
-import java.util.Properties ;
-import java.io.* ;
+import java.util.Properties;
 
 /**
  * This logger supports simple output to a print stream. By default that

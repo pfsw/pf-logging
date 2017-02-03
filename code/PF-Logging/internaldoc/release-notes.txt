@@ -3,7 +3,7 @@ RELEASE NOTES FOR PACKAGE PF-Logging
 
 -------------------------------------------------------------------------------
 
-VERSION 3.0.0 (24.01.2017)
+VERSION 3.0.0 (03.02.2017) - 53 Unit Tests
 
 * Migrated 
   > Maven -> Gradle
@@ -11,9 +11,16 @@ VERSION 3.0.0 (24.01.2017)
   
 * Package renaming 'org.pf' -> 'org.pfsw'
 
+* Removed dynamic loading of JavaUtilLoggerFactory
+
+* Added new mechanism to initialize LoggerFactory based on
+  org.pfsw.logging.LogBindingInitializer and ServiceLoader 
+  
+* Improved dynamic implementation loading by supporting different classloaders
+
 -------------------------------------------------------------------------------
 
-VERSION 2.3.0 (05.01.2017)
+VERSION 2.3.0 (05.01.2017) - 51 Unit Tests
 
 New Logger2 and Logger2Logger allow usage of placeholders as supported by String.format().
 

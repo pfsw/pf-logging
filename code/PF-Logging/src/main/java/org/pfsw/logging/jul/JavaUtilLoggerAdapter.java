@@ -13,12 +13,11 @@ package org.pfsw.logging.jul ;
 import java.util.Properties;
 import java.util.logging.Level;
 
+import org.pfsw.logging.Logger;
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
-
 import org.pfsw.logging.LogLevel;
-import org.pfsw.logging.Logger;
 
 /**
  * This logger adapter maps to logger instances of the java.util.logging (JUL)

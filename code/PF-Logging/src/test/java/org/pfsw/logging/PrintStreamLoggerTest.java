@@ -17,8 +17,6 @@ import static org.junit.Assert.*;
 import java.util.Properties;
 
 import org.junit.Test;
-import org.pfsw.logging.Logger;
-import org.pfsw.logging.PrintStreamLogger;
 import org.pfsw.logging.testhelper.InMemoryPrintStream;
 
 /**
