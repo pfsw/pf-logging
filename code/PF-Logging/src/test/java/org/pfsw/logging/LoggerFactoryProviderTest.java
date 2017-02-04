@@ -16,7 +16,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.pfsw.logging.deferred.DeferredInitializationLoggerFactory;
 import org.pfsw.logging.jul.JavaUtilLoggerFactory;
+import org.pfsw.logging.nil.NilLoggerFactory;
+import org.pfsw.logging.stdout.PrintStreamLoggerFactory;
 import org.pfsw.logging.testhelper.Dummy1LoggerFactory;
 import org.pfsw.logging.testhelper.Dummy2LoggerFactory;
 import org.pfsw.logging.testhelper.Dummy3LoggerFactory;
@@ -84,7 +87,7 @@ public class LoggerFactoryProviderTest
     factory = LoggerFactoryProvider.getLoggerFactory("DUMMY2");
     assertEquals(Dummy2LoggerFactory.class.getName(), factory.getClass().getName());
     factory = LoggerFactoryProvider.getLoggerFactory("DUMMY99");
-    assertNull(factory);
+    assertEquals(DeferredInitializationLoggerFactory.class.getName(), factory.getClass().getName());
   }  
 
   @Test

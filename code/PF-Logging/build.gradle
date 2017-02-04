@@ -19,19 +19,6 @@ apply from: "${includePath}/java/publishing-java-full.gradle"
 dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.12'
   testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
-  // This is for Eclipse IDE.
-  // The org.pfsw.logging.LoggerFactory cannot be in src/test/resources
-  // because it would override the same file from src/main/resources
-  // So it is in test-res and then packaged into the below JAR.
-  testRuntime files("${localTestLibDir}/${localTestArchive}")
 }
-
-task createTestPluginsJar(type: Jar) {
-  from file('test-res')
-  archiveName localTestArchive
-  destinationDir file(localTestLibDir)
-}
-
-test.dependsOn(createTestPluginsJar)
 
 task wrapper(type: Wrapper) { gradleVersion = '2.14.1' }

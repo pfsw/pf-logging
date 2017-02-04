@@ -7,7 +7,7 @@
 //
 // Copyright (c) 2003, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
-package org.pfsw.logging;
+package org.pfsw.logging.stdout;
 
 // ===========================================================================
 // IMPORTS
@@ -17,6 +17,8 @@ import static org.junit.Assert.*;
 import java.util.Properties;
 
 import org.junit.Test;
+import org.pfsw.logging.Logger;
+import org.pfsw.logging.stdout.PrintStreamLogger;
 import org.pfsw.logging.testhelper.InMemoryPrintStream;
 
 /**
@@ -28,19 +30,34 @@ import org.pfsw.logging.testhelper.InMemoryPrintStream;
 public class PrintStreamLoggerTest
 {
   @Test
-  public void test_logLevel_1() throws Exception
+  public void test_logLevel_default() throws Exception
   {
     Logger logger;
 
     logger = new PrintStreamLogger();
     assertTrue(!logger.isLoggingDebugs());
-    assertTrue(!logger.isLoggingInfos());
-    assertTrue(!logger.isLoggingWarnings());
+    assertTrue(logger.isLoggingInfos());
+    assertTrue(logger.isLoggingWarnings());
     assertTrue(logger.isLoggingErrors());
   } 
 
   @Test
-  public void test_logLevel_2() throws Exception
+  public void test_logLevel_ERROR() throws Exception
+  {
+    Logger logger;
+    Properties props = new Properties();
+    
+    props.setProperty(PrintStreamLogger.PROP_LOG_LEVEL, "ERROR");
+    logger = new PrintStreamLogger();
+    logger.initialize(props);
+    assertTrue(!logger.isLoggingDebugs());
+    assertTrue(!logger.isLoggingInfos());
+    assertTrue(!logger.isLoggingWarnings());
+    assertTrue(logger.isLoggingErrors());
+  } 
+  
+  @Test
+  public void test_logLevel_WARNING() throws Exception
   {
     Logger logger;
     Properties props = new Properties();
@@ -55,7 +72,7 @@ public class PrintStreamLoggerTest
   } 
 
   @Test
-  public void test_logLevel_3() throws Exception
+  public void test_logLevel_INFO() throws Exception
   {
     Logger logger;
     Properties props = new Properties();
@@ -70,7 +87,7 @@ public class PrintStreamLoggerTest
   } 
 
   @Test
-  public void test_logLevel_4() throws Exception
+  public void test_logLevel_DEBUG() throws Exception
   {
     Logger logger;
     Properties props = new Properties();

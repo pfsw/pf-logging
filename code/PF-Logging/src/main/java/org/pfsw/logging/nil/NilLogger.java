@@ -9,12 +9,14 @@
 //
 // Copyright (c) 2001-2014, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
-package org.pfsw.logging;
+package org.pfsw.logging.nil;
 
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
 import java.util.Properties;
+
+import org.pfsw.logging.Logger;
 
 /**
  * This class implements the Logger interface but doesn't write anything

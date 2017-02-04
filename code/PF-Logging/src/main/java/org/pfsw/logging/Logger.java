@@ -29,6 +29,8 @@ import java.util.Properties;
  */
 public interface Logger
 {
+  public static final String ANONYMOUS_LOGGER_NAME = "";
+  
   /**
    * This is the log level string representation for NONE
    */

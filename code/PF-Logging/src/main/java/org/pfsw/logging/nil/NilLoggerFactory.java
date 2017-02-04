@@ -1,40 +1,42 @@
 // ===========================================================================
-// CONTENT  : CLASS PrintStreamLoggerFactory
+// CONTENT  : CLASS NilLoggerFactory
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 2.0 - 13/12/2015
+// VERSION  : 1.0 - 13/12/2015
 // HISTORY  :
-//  21/06/2014  mdu  CREATED
-//  13/12/2015  mdu   added ->  name with getter, getLogger(Class)
+//  13/12/2015  mdu  CREATED
 //
-// Copyright (c) 2014-2015, by MDCS. All rights reserved.
+// Copyright (c) 2015, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.logging ;
+package org.pfsw.logging.nil;
+
+import org.pfsw.logging.Logger;
+import org.pfsw.logging.LoggerBindingNames;
+import org.pfsw.logging.LoggerFactory;
 
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
 
 /**
- * This factory returns logger instances of class {@link PrintStreamLogger}.
+ * This factory creates a single NilLogger instance.
  *
  * @author Manfred Duchrow
- * @version 2.0
+ * @version 1.0
  */
-public class PrintStreamLoggerFactory implements LoggerFactory
+public class NilLoggerFactory implements LoggerFactory
 {
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
-  private final String name;
-  
+  private final NilLogger logger = new NilLogger();
+
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
-  public PrintStreamLoggerFactory(String name)
+  public NilLoggerFactory()
   {
-    super() ;
-    this.name = name;
-  } // PrintStreamLoggerFactory()
+    super();
+  }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
@@ -42,25 +44,24 @@ public class PrintStreamLoggerFactory implements LoggerFactory
   @Override
   public String getName()
   {
-    return this.name;
+    return LoggerBindingNames.NIL;
   }
-  
+
   @Override
   public Logger createLogger()
   {
-    return new PrintStreamLogger();
+    return this.logger;
   }
-  
+
   @Override
   public Logger getLogger(String loggerName)
   {
-    return new PrintStreamLogger(loggerName);
+    return this.logger;
   }
 
   @Override
   public Logger getLogger(Class<?> clazz)
   {
-    return this.getLogger(clazz.getName());
+    return this.logger;
   }
-
-} // class PrintStreamLoggerFactory
+}

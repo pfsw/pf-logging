@@ -11,7 +11,7 @@
 //
 // Copyright (c) 2001-2014, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
-package org.pfsw.logging;
+package org.pfsw.logging.stdout;
 
 // ===========================================================================
 // IMPORTS
@@ -20,8 +20,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.text.MessageFormat;
 import java.util.Properties;
+
+import org.pfsw.logging.internal.AbstractLogger;
 
 /**
  * This logger supports simple output to a print stream. By default that
@@ -35,7 +36,7 @@ import java.util.Properties;
  * @author Manfred Duchrow
  * @version 1.3
  */
-public class PrintStreamLogger implements Logger
+public class PrintStreamLogger extends AbstractLogger
 {
   // =========================================================================
   // CONSTANTS
@@ -85,7 +86,7 @@ public class PrintStreamLogger implements Logger
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
-  private int logLevel = LEVEL_ERROR ;
+  private int logLevel = LEVEL_INFO;
   /**
    * Returns the current log level
    */  
@@ -103,15 +104,7 @@ public class PrintStreamLogger implements Logger
   private PrintStream printStream = System.out ;
   protected PrintStream getPrintStream() { return printStream ; }
   protected void setPrintStream( PrintStream newValue ) { printStream = newValue ; } 
-  
-  // -------------------------------------------------------------------------
-  
-  private String loggerName = "";
-  
-  // =========================================================================
-  // CLASS METHODS
-  // =========================================================================
-
+    
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
@@ -130,21 +123,12 @@ public class PrintStreamLogger implements Logger
    */
   public PrintStreamLogger(String loggerName)
   {
-    super() ;
-    this.setLoggerName(loggerName);
+    super(loggerName) ;
   } // PrintStreamLogger() 
   
   // =========================================================================
   // PUBLIC INSTANCE METHODS
   // =========================================================================
-  @Override
-  public String getName()
-  {
-    return this.loggerName;
-  } // getName() 
-  
-  // -------------------------------------------------------------------------
-
   /**
    * Initialize the logger from the given properties settings.
    * Currently the following properties are supported:
@@ -415,25 +399,10 @@ public class PrintStreamLogger implements Logger
     return LEVEL_INDICATOR[level];
   } // getLevelIndicator() 
 
-  // -------------------------------------------------------------------------
-  
-  protected String replacePlaceholders(String text, Object... params) 
-  {
-    if ((params.length > 0) && (text.indexOf('{') >= 0))
-    {
-      return MessageFormat.format(text, params);
-    }
-    return text;
-  } // replacePlaceholders()
-  
-  // -------------------------------------------------------------------------
-
   protected boolean useLevelIndicators()
   {
     return true;
   } // useLevelIndicators() 
-
-  // -------------------------------------------------------------------------
 
   protected void initPrintStream(String filename)
   {
@@ -456,8 +425,6 @@ public class PrintStreamLogger implements Logger
       }
     }
   } // initPrintStream() 
-
-  // -------------------------------------------------------------------------
 
   protected boolean initLogLevel(String level)
   {
@@ -496,29 +463,5 @@ public class PrintStreamLogger implements Logger
     }
 
     return true;
-  } // initLogLevel() 
-
-  // -------------------------------------------------------------------------
-
-  protected void setLoggerName(String loggerName)
-  {
-    this.loggerName = loggerName;
-  } // setLoggerName() 
-  
-  // -------------------------------------------------------------------------
-  
-  protected boolean isNullOrEmpty(String string) 
-  {
-    return (string == null) || (string.length() == 0);
-  } // isNullOrEmpty() 
-  
-  // -------------------------------------------------------------------------
-  
-  protected boolean isNullOrBlank(String string) 
-  {
-    return (string == null) || (string.trim().length() == 0);
-  } // isNullOrBlank() 
-  
-  // -------------------------------------------------------------------------
-  
-} // class PrintStreamLogger 
+  } // initLogLevel()  
+} 

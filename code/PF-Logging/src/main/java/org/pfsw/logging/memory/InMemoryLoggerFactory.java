@@ -1,37 +1,39 @@
 // ===========================================================================
-// CONTENT  : CLASS NilLoggerFactory
+// CONTENT  : CLASS InMemoryLoggerFactory
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 1.0 - 13/12/2015
+// VERSION  : 1.0 - 04/02/2017
 // HISTORY  :
-//  13/12/2015  mdu  CREATED
+//  04/02/2017  mdu  CREATED
 //
-// Copyright (c) 2015, by MDCS. All rights reserved.
+// Copyright (c) 2017, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.logging;
+package org.pfsw.logging.memory ;
 
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
+import org.pfsw.logging.Logger;
+import org.pfsw.logging.LoggerFactory ;
 
 /**
- * This factory creates a single NilLogger instance.
+ * This factory produces logger instances that keep all log output in memory. 
  *
  * @author Manfred Duchrow
  * @version 1.0
  */
-class NilLoggerFactory implements LoggerFactory
+public class InMemoryLoggerFactory implements LoggerFactory
 {
   // =========================================================================
-  // INSTANCE VARIABLES
+  // CONSTANTS
   // =========================================================================
-  private final NilLogger logger = new NilLogger();
+  public static final String LOGGER_TYPE = "IN-MEM";
 
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
-  public NilLoggerFactory()
+  public InMemoryLoggerFactory()
   {
-    super();
+    super() ;
   }
 
   // =========================================================================
@@ -40,24 +42,24 @@ class NilLoggerFactory implements LoggerFactory
   @Override
   public String getName()
   {
-    return LoggerBindingNames.NIL;
+    return LOGGER_TYPE;
   }
-
+  
   @Override
   public Logger createLogger()
   {
-    return this.logger;
-  }
-
-  @Override
-  public Logger getLogger(String loggerName)
-  {
-    return this.logger;
+    return this.getLogger(Logger.ANONYMOUS_LOGGER_NAME);
   }
 
   @Override
   public Logger getLogger(Class<?> clazz)
   {
-    return this.logger;
+    return this.getLogger(clazz.getName());
+  }
+  
+  @Override
+  public Logger getLogger(String loggerName)
+  {
+    return new InMemoryLogger(loggerName);
   }
 }

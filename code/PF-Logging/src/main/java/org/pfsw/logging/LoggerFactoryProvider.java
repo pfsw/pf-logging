@@ -16,7 +16,10 @@ package org.pfsw.logging;
 // ===========================================================================
 import java.util.ServiceLoader;
 
+import org.pfsw.logging.deferred.DeferredInitializationLoggerFactory;
 import org.pfsw.logging.jul.JavaUtilLoggerFactory;
+import org.pfsw.logging.nil.NilLoggerFactory;
+import org.pfsw.logging.stdout.PrintStreamLoggerFactory;
 
 /**
  * This class provides static access to the configured LoggerFactory which
@@ -58,15 +61,34 @@ public class LoggerFactoryProvider
    */
   public static LoggerFactory getLoggerFactory()
   {
-    return getRegistry().getLoggerFactory(getDefaultFactoryName());
+    return getLoggerFactory(getDefaultFactoryName());
   }
 
   /**
-   * Returns the logger factory with the given name or null if it cannot be found.
+   * Returns the logger factory with the given name or, if it cannot be found,
+   * a special factory that produces logger that do all logging to 
+   * stdout and try to load the desired factory later, as soon as
+   * it is available.
+   * <br>
+   * So this method never returns null.
+   * 
+   * @param name The unique name of the logger factory type (must not be null).
+   * @throws IllegalArgumentException If the given name is null.
    */
   public static LoggerFactory getLoggerFactory(String name)
   {
-    return getRegistry().getLoggerFactory(name);
+    LoggerFactory factory;
+    
+    if (name == null)
+    {
+      throw new IllegalArgumentException("The name for a logger factory must not be null!");
+    }
+    factory = getRegistry().getLoggerFactory(name);
+    if (factory == null)
+    {
+      factory = new DeferredInitializationLoggerFactory(name);
+    }
+    return factory;
   }
 
   /**
@@ -138,7 +160,7 @@ public class LoggerFactoryProvider
     classLoader = getClassLoader();
     if (classLoader != null)
     {      
-      foundInstances = ServiceLoader.load(LoggerFactory.class);
+      foundInstances = ServiceLoader.load(LoggerFactory.class, classLoader);
       for (LoggerFactory loggerFactory : foundInstances)
       {
         register(loggerFactory);
