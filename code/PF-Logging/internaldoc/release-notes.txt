@@ -3,6 +3,17 @@ RELEASE NOTES FOR PACKAGE PF-Logging
 
 -------------------------------------------------------------------------------
 
+VERSION 3.1.0 (04.03.2017) - 59 Unit Tests
+
+* LoggerProvider
+  > Added
+    - public static Logger getLogger(Class<?> clazz)
+    - public static Logger getLogger(String loggerName)
+    - public static Logger2 getLogger2(Class<?> clazz)
+    - public static Logger2 getLogger2(String loggerName)
+
+-------------------------------------------------------------------------------
+
 VERSION 3.0.0 (04.02.2017) - 55 Unit Tests
 
 * Migrated 

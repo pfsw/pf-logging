@@ -1,11 +1,12 @@
 // ===========================================================================
 // CONTENT  : CLASS LoggerFactoryProvider
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 2.1 - 03/02/2017
+// VERSION  : 2.2 - 04/03/2017
 // HISTORY  :
 //  21/06/2014  mdu  CREATED
 //  13/12/2015  mdu   changed -> using registry
 //  03/02/2017  mdu   added   -> initialization mechanism via LogBindingInitializer
+//  04/03/2017  mdu   added   -> getLogger(), getLogger2()
 //
 // Copyright (c) 2014-2017, by MDCS. All rights reserved.
 // ===========================================================================
@@ -29,7 +30,7 @@ import org.pfsw.logging.stdout.PrintStreamLoggerFactory;
  * If this property is not specified, the default factory will be "STDOUT".
  *
  * @author Manfred Duchrow
- * @version 2.1
+ * @version 2.2
  */
 public class LoggerFactoryProvider
 {
@@ -54,7 +55,55 @@ public class LoggerFactoryProvider
   }
 
   // -------------------------------------------------------------------------
+  
+  /**
+   * Returns a logger instance corresponding to the full qualifies name of the given class.
+   * If it does not exist yet, it will be created.
+   * Otherwise the already existing logger will be returned.
+   * <p>
+   * This will use the LoggerFactory provided by {@link #getLoggerFactory()}.
+   */
+  public static Logger getLogger(Class<?> clazz)
+  {
+    return getLoggerFactory().getLogger(clazz);
+  }
 
+  /**
+   * Returns a logger instance corresponding to the given name.
+   * If it does not exist yet, it will be created.
+   * Otherwise the already existing logger will be returned.
+   * <p>
+   * This will use the LoggerFactory provided by {@link #getLoggerFactory()}.
+   */
+  public static Logger getLogger(String loggerName)
+  {
+    return getLoggerFactory().getLogger(loggerName);
+  }
+  
+  /**
+   * Returns a logger instance corresponding to the full qualifies name of the given class.
+   * If it does not exist yet, it will be created.
+   * Otherwise the already existing logger will be returned.
+   * <p>
+   * This will use the LoggerFactory provided by {@link #getLoggerFactory()}.
+   */
+  public static Logger2 getLogger2(Class<?> clazz)
+  {
+    return new Logger2Logger(getLogger(clazz));
+  }
+  
+  /**
+   * Returns a logger instance corresponding to the given name.
+   * If it does not exist yet, it will be created.
+   * Otherwise the already existing logger will be returned.
+   * <p>
+   * This will use the LoggerFactory provided by {@link #getLoggerFactory()}.
+   */
+  public static Logger2 getLogger2(String loggerName)
+  {
+    return new Logger2Logger(getLogger(loggerName));
+  }
+  
   /**
    * Returns the default logger factory (i.e. the logger factory corresponding 
    * to the default name). 

@@ -107,6 +107,30 @@ public class LoggerFactoryProviderTest
     assertTrue("Unexpected class: " + factory.getClass().getName(), factory instanceof JavaUtilLoggerFactory);    
   } 
   
+  @Test
+  public void test_getLogger_by_class()
+  {
+    assertNotNull(LoggerFactoryProvider.getLogger(LoggerFactoryProviderTest.class));
+  }
+
+  @Test
+  public void test_getLogger_by_name()
+  {
+    assertNotNull(LoggerFactoryProvider.getLogger("unittest"));
+  }
+  
+  @Test
+  public void test_getLogger2_by_class()
+  {
+    assertNotNull(LoggerFactoryProvider.getLogger2(LoggerFactoryProviderTest.class));
+  }
+  
+  @Test
+  public void test_getLogger2_by_name()
+  {
+    assertNotNull(LoggerFactoryProvider.getLogger2("unittest"));
+  }
+  
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================

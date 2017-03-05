@@ -8,11 +8,7 @@
 //
 // Copyright (c) 2014-2015, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.logging ;
-
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
+package org.pfsw.logging;
 
 /**
  * The interface a logger factory must support in order to produce logger instances
@@ -22,7 +18,7 @@ package org.pfsw.logging ;
  * @version 2.0
  */
 public interface LoggerFactory
-{ 
+{
   /**
    * Returns the name of this logger factory. This name must consist of ASCII letters,
    * digits and underscore (_) only.
@@ -30,7 +26,7 @@ public interface LoggerFactory
    * framework binding that is provided by this factory.
    */
   public String getName();
-  
+
   /**
    * Returns a new logger instance that is not named (empty string name) and therefore
    * not be retrieved again in any way by the factory.
@@ -43,12 +39,12 @@ public interface LoggerFactory
    * Otherwise the already existing logger will be returned.
    */
   public Logger getLogger(String loggerName);
-  
+
   /**
    * Returns a logger instance corresponding to the full qualifies name of the given class.
    * If it does not exist yet, it will be created.
    * Otherwise the already existing logger will be returned.
    */
   public Logger getLogger(Class<?> clazz);
-  
-} // interface LoggerFactory
+
+}
