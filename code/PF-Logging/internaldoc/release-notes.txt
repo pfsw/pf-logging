@@ -3,7 +3,7 @@ RELEASE NOTES FOR PACKAGE PF-Logging
 
 -------------------------------------------------------------------------------
 
-VERSION 3.1.0 (04.03.2017) - 59 Unit Tests
+VERSION 3.1.0 (09.11.2017) - 59 Unit Tests
 
 * LoggerProvider
   > Added

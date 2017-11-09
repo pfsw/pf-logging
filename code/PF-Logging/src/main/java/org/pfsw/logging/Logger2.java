@@ -9,10 +9,6 @@
 // ===========================================================================
 package org.pfsw.logging ;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
-
 /**
  * Another logger interface that is close to the JBoss logging API. 
  * It particularly specifies the formatting log methods. 

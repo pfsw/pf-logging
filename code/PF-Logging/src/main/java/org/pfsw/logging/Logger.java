@@ -30,29 +30,27 @@ import java.util.Properties;
 public interface Logger
 {
   public static final String ANONYMOUS_LOGGER_NAME = "";
-  
+
   /**
    * This is the log level string representation for NONE
    */
-  public static final String LL_NONE    = "NONE" ;
+  public static final String LL_NONE = "NONE";
   /**
    * This is the log level string representation for ERROR
    */
-  public static final String LL_ERROR    = "ERROR" ;
+  public static final String LL_ERROR = "ERROR";
   /**
    * This is the log level string representation for WARNING
    */
-  public static final String LL_WARNING    = "WARNING" ;
+  public static final String LL_WARNING = "WARNING";
   /**
    * This is the log level string representation for INFO
    */
-  public static final String LL_INFO    = "INFO" ;
+  public static final String LL_INFO = "INFO";
   /**
    * This is the log level string representation for DEBUG
    */
-  public static final String LL_DEBUG    = "DEBUG" ;
-
-  // -------------------------------------------------------------------------
+  public static final String LL_DEBUG = "DEBUG";
 
   /**
    * Returns the name of this logger. The returned name might be
@@ -60,22 +58,16 @@ public interface Logger
    */
   public String getName();
 
-  // -------------------------------------------------------------------------
-  
   /**
    * Initialize the logger from the given properties settings.
    **/
   public void initialize(Properties properties);
-
-  // -------------------------------------------------------------------------
 
   /**
    * Writes the given exception to the log output device(s).
    * The log level will be ignored.
    **/
   public void logException(Throwable ex);
-
-  // -------------------------------------------------------------------------
 
   /**
    * If the logging level is DEBUG the given message will be written to
@@ -86,8 +78,6 @@ public interface Logger
    **/
   public void logDebug(String message, Object... params);
 
-  // -------------------------------------------------------------------------
-
   /**
    * If the logging level is INFO or DEBUG the given message will be 
    * written to the log output device(s).
@@ -96,8 +86,6 @@ public interface Logger
    * @param params Optional parameters to be used for replacing placeholders in the message text.
    **/
   public void logInfo(String message, Object... params);
-
-  // -------------------------------------------------------------------------
 
   /**
    * If the logging level is DEBUG, INFO or WARNING the given message will 
@@ -108,8 +96,6 @@ public interface Logger
    **/
   public void logWarning(String message, Object... params);
 
-  // -------------------------------------------------------------------------
-
   /**
    * If the logging level is DEBUG, INFO, WARNING or ERROR the given message 
    * will be written to the log output device(s).
@@ -119,15 +105,11 @@ public interface Logger
    **/
   public void logError(String message, Object... params);
 
-  // -------------------------------------------------------------------------
-
   /**
    * If the logging level is DEBUG, INFO or WARNING the given message
    * and the exception will be written to the log output device(s).
    **/
   public void logWarning(String message, Throwable exception);
-
-  // -------------------------------------------------------------------------
 
   /**
    * If the logging level is DEBUG, INFO, WARNING or ERROR the given message 
@@ -135,33 +117,25 @@ public interface Logger
    **/
   public void logError(String message, Throwable exception);
 
-  // -------------------------------------------------------------------------
-
   /**
    * Returns true, if debug messages will be written to the output device(s).
    **/
   public boolean isLoggingDebugs();
-
-  // -------------------------------------------------------------------------
 
   /**
    * Returns true, if info messages will be written to the output device(s).
    **/
   public boolean isLoggingInfos();
 
-  // -------------------------------------------------------------------------
   /**
    * Returns true, if warnings will be written to the output device(s).
    **/
   public boolean isLoggingWarnings();
 
-  // -------------------------------------------------------------------------
   /**
    * Returns true, if errors will be written to the output device(s).
    **/
   public boolean isLoggingErrors();
-
-  // -------------------------------------------------------------------------
 
   /**
    * Changes the log level to the specified level. Returns true if the level
@@ -171,6 +145,4 @@ public interface Logger
    */
   public boolean setLogLevel(String logLevel);
 
-  // -------------------------------------------------------------------------
-
-} // interface Logger
+}
