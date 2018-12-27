@@ -39,7 +39,7 @@ public class NilLogger implements Logger
   public NilLogger()
   {
     super();
-  } // NilLogger() 
+  }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
@@ -48,9 +48,7 @@ public class NilLogger implements Logger
   public String getName()
   {
     return "NilLogger";
-  } // getName()
-  
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Initialize the logger from the given properties settings.
@@ -59,9 +57,7 @@ public class NilLogger implements Logger
   public void initialize(Properties properties)
   {
     // Template method that can be overridden by subclasses
-  } // initialize() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Writes the given exception to the log output device(s).
@@ -71,9 +67,7 @@ public class NilLogger implements Logger
   public void logException(Throwable ex)
   {
     // Template method that can be overridden by subclasses
-  } // logException() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG the given message will be written to
@@ -83,9 +77,7 @@ public class NilLogger implements Logger
   public void logDebug(String message, Object... params)
   {
     // Template method that can be overridden by subclasses
-  } // logDebug() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is INFO or DEBUG the given message will be 
@@ -95,9 +87,7 @@ public class NilLogger implements Logger
   public void logInfo(String message, Object... params)
   {
     // Template method that can be overridden by subclasses
-  } // logInfo() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG, INFO or WARNING the given message will 
@@ -107,9 +97,7 @@ public class NilLogger implements Logger
   public void logWarning(String message, Object... params)
   {
     // Template method that can be overridden by subclasses
-  } // logWarning() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG, INFO, WARNING or ERROR the given message 
@@ -119,9 +107,7 @@ public class NilLogger implements Logger
   public void logError(String message, Object... params)
   {
     // Template method that can be overridden by subclasses
-  } // logError() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG, INFO or WARNING the given message
@@ -131,9 +117,7 @@ public class NilLogger implements Logger
   public void logWarning(String message, Throwable exception)
   {
     // Template method that can be overridden by subclasses
-  } // logWarning() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG, INFO, WARNING or ERROR the given message 
@@ -143,9 +127,7 @@ public class NilLogger implements Logger
   public void logError(String message, Throwable exception)
   {
     // Template method that can be overridden by subclasses
-  } // logError() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true, if debug messages will be written to the output device(s).
@@ -154,9 +136,7 @@ public class NilLogger implements Logger
   public boolean isLoggingDebugs()
   {
     return false;
-  } // isLoggingDebugs() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true, if info messages will be written to the output device(s).
@@ -165,9 +145,8 @@ public class NilLogger implements Logger
   public boolean isLoggingInfos()
   {
     return false;
-  } // isLoggingInfos() 
+  }
 
-  // -------------------------------------------------------------------------
   /**
    * Returns true, if warnings will be written to the output device(s).
    **/
@@ -175,9 +154,8 @@ public class NilLogger implements Logger
   public boolean isLoggingWarnings()
   {
     return false;
-  } // isLoggingWarnings() 
+  }
 
-  // -------------------------------------------------------------------------
   /**
    * Returns true, if errors will be written to the output device(s).
    **/
@@ -185,9 +163,7 @@ public class NilLogger implements Logger
   public boolean isLoggingErrors()
   {
     return false;
-  } // isLoggingErrors() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Changes the log level to the specified level. Returns true if the level
@@ -199,8 +175,6 @@ public class NilLogger implements Logger
   public boolean setLogLevel(String logLevel)
   {
     return false;
-  } // setLogLevel() 
+  }
 
-  // -------------------------------------------------------------------------
-
-} // class NilLogger 
+}

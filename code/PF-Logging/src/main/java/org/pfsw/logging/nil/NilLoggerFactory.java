@@ -9,13 +9,12 @@
 // ===========================================================================
 package org.pfsw.logging.nil;
 
-import org.pfsw.logging.Logger;
-import org.pfsw.logging.LoggerBindingNames;
-import org.pfsw.logging.LoggerFactory;
-
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
+import org.pfsw.logging.Logger;
+import org.pfsw.logging.LoggerBindingNames;
+import org.pfsw.logging.LoggerFactory;
 
 /**
  * This factory creates a single NilLogger instance.

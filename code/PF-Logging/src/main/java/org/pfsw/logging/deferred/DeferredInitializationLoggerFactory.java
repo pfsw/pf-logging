@@ -32,10 +32,6 @@ import org.pfsw.logging.LoggerFactory;
 public class DeferredInitializationLoggerFactory implements LoggerFactory
 {
   // =========================================================================
-  // CONSTANTS
-  // =========================================================================
-
-  // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
   private final String desiredLoggerType;
@@ -57,25 +53,25 @@ public class DeferredInitializationLoggerFactory implements LoggerFactory
   {
     return "INTERNAL-DO-NOT-REFER-TO";
   }
-  
+
   @Override
   public Logger createLogger()
   {
     return new DeferredInitializationLoggerAdapter(this.getDesiredLoggerType());
   }
-  
+
   @Override
   public Logger getLogger(Class<?> clazz)
   {
     return new DeferredInitializationLoggerAdapter(this.getDesiredLoggerType(), clazz);
   }
-  
+
   @Override
   public Logger getLogger(String loggerName)
   {
     return new DeferredInitializationLoggerAdapter(this.getDesiredLoggerType(), loggerName);
   }
-  
+
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================

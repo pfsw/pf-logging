@@ -8,14 +8,13 @@
 //
 // Copyright (c) 2014-2015, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.logging.stdout ;
-
-import org.pfsw.logging.Logger;
-import org.pfsw.logging.LoggerFactory;
+package org.pfsw.logging.stdout;
 
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
+import org.pfsw.logging.Logger;
+import org.pfsw.logging.LoggerFactory;
 
 /**
  * This factory returns logger instances of class {@link PrintStreamLogger}.
@@ -29,15 +28,15 @@ public class PrintStreamLoggerFactory implements LoggerFactory
   // INSTANCE VARIABLES
   // =========================================================================
   private final String name;
-  
+
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
   public PrintStreamLoggerFactory(String name)
   {
-    super() ;
+    super();
     this.name = name;
-  } // PrintStreamLoggerFactory()
+  }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
@@ -47,13 +46,13 @@ public class PrintStreamLoggerFactory implements LoggerFactory
   {
     return this.name;
   }
-  
+
   @Override
   public Logger createLogger()
   {
     return new PrintStreamLogger();
   }
-  
+
   @Override
   public Logger getLogger(String loggerName)
   {
@@ -66,4 +65,4 @@ public class PrintStreamLoggerFactory implements LoggerFactory
     return this.getLogger(clazz.getName());
   }
 
-} // class PrintStreamLoggerFactory
+}

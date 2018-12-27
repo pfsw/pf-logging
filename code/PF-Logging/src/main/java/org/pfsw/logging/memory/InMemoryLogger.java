@@ -31,10 +31,6 @@ import org.pfsw.logging.internal.AbstractLogger;
 public class InMemoryLogger extends AbstractLogger
 {
   // =========================================================================
-  // CONSTANTS
-  // =========================================================================
-
-  // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
   private final List<LogRecord> logEntries = new ArrayList<LogRecord>();
@@ -155,21 +151,21 @@ public class InMemoryLogger extends AbstractLogger
     return false;
   }
 
-  public int size() 
+  public int size()
   {
     return this.getLogEntries().size();
   }
-  
-  public boolean isEmpty() 
+
+  public boolean isEmpty()
   {
     return this.getLogEntries().isEmpty();
   }
-  
-  public void clear() 
+
+  public void clear()
   {
     this.getLogEntries().clear();
   }
-  
+
   /**
    * Returns a list of all log records with a message that contains 
    * the given text.
@@ -177,10 +173,10 @@ public class InMemoryLogger extends AbstractLogger
    * @param text The text to search for (must not be null).
    * @return A list of found records (never null).
    */
-  public List<LogRecord> findEntriesContaining(String text) 
+  public List<LogRecord> findEntriesContaining(String text)
   {
     List<LogRecord> result;
-    
+
     result = new ArrayList<LogRecord>();
     for (LogRecord logRecord : this.getLogEntries())
     {
@@ -191,7 +187,7 @@ public class InMemoryLogger extends AbstractLogger
     }
     return result;
   }
-  
+
   public List<LogRecord> getLogEntries()
   {
     return this.logEntries;

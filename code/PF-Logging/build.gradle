@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 def includePath = project.pfswGradleIncludePath // usually specified in $GRADLE_USER_HOME/gradle.properties
 
-version = '3.1.0'
+version = '3.2.0'
 archivesBaseName = "pf-logging"
 
 ext {
@@ -22,3 +22,5 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) { gradleVersion = '2.14.1' }
+
+println "${project.name} ${project.version}"

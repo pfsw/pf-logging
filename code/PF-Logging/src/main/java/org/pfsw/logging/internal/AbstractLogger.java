@@ -21,12 +21,8 @@ import org.pfsw.logging.Logger;
  * @author Manfred Duchrow
  * @version 1.0
  */
-abstract public class AbstractLogger implements Logger
+public abstract class AbstractLogger implements Logger
 {
-  // =========================================================================
-  // CONSTANTS
-  // =========================================================================
-
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
@@ -53,12 +49,12 @@ abstract public class AbstractLogger implements Logger
   public String getName()
   {
     return this.loggerName;
-  } 
+  }
 
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
-  protected String replacePlaceholders(String text, Object... params) 
+  protected String replacePlaceholders(String text, Object... params)
   {
     if ((params.length > 0) && (text.indexOf('{') >= 0))
     {
@@ -71,19 +67,19 @@ abstract public class AbstractLogger implements Logger
   {
     return this.loggerName;
   }
-  
+
   protected void setLoggerName(String loggerName)
   {
     this.loggerName = loggerName;
-  } 
+  }
 
-  protected boolean isNullOrEmpty(String string) 
+  protected boolean isNullOrEmpty(String string)
   {
     return (string == null) || (string.length() == 0);
-  } 
-  
-  protected boolean isNullOrBlank(String string) 
+  }
+
+  protected boolean isNullOrBlank(String string)
   {
     return (string == null) || (string.trim().length() == 0);
-  } 
+  }
 }

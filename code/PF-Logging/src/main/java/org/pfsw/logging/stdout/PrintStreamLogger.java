@@ -44,67 +44,51 @@ public class PrintStreamLogger extends AbstractLogger
   /**
    * This log level specifies that no message at all will be logged
    */
-  public static final int LEVEL_NONE     = 0 ;
-	/**
-	 * This log level specifies that only error messages will be logged
-	 */
-	public static final int LEVEL_ERROR    = 1 ;
-	/**
-	 * This log level specifies that only error and warning messages will be 
-	 * logged
-	 */
-	public static final int LEVEL_WARN     = 2 ;
-	/**
-	 * This log level specifies that only error, warning and info messages will 
-	 * be logged
-	 */
-	public static final int LEVEL_INFO     = 3 ;
-	/**
-	 * This log level specifies that all messages will be logged
-	 */
-	public static final int LEVEL_DEBUG    = 4 ;
+  public static final int LEVEL_NONE = 0;
+  /**
+   * This log level specifies that only error messages will be logged
+   */
+  public static final int LEVEL_ERROR = 1;
+  /**
+   * This log level specifies that only error and warning messages will be 
+   * logged
+   */
+  public static final int LEVEL_WARN = 2;
+  /**
+   * This log level specifies that only error, warning and info messages will 
+   * be logged
+   */
+  public static final int LEVEL_INFO = 3;
+  /**
+   * This log level specifies that all messages will be logged
+   */
+  public static final int LEVEL_DEBUG = 4;
 
-	/**
-	 * The property that specifies a filename to redirect the log output
-	 * <p>"logging.printstream.file"<p>
-	 */
-	public static final String PROP_OUTPUT_FILE    = "logging.printstream.file" ;
-	/**
-	 * The property to set the log level. The value must be one of the following 
-	 * strings: "NONE", "ERROR", "WARNING", "INFO", "DEBUG"
-	 * <p>"logging.level"<p>
-	 */
-	public static final String PROP_LOG_LEVEL    	= "logging.level" ;
-	/**
-	 * The property to set the the name of the logger.
-	 * <p>"logging.logger.name"<p>
-	 */
-	public static final String PROP_LOGGER_NAME	= "logging.logger.name" ;
-  
-  private static final String[] LEVEL_INDICATOR = { "", "E", "W", "I", "D", "X" } ;
+  /**
+   * The property that specifies a filename to redirect the log output
+   * <p>"logging.printstream.file"<p>
+   */
+  public static final String PROP_OUTPUT_FILE = "logging.printstream.file";
+  /**
+   * The property to set the log level. The value must be one of the following 
+   * strings: "NONE", "ERROR", "WARNING", "INFO", "DEBUG"
+   * <p>"logging.level"<p>
+   */
+  public static final String PROP_LOG_LEVEL = "logging.level";
+  /**
+   * The property to set the the name of the logger.
+   * <p>"logging.logger.name"<p>
+   */
+  public static final String PROP_LOGGER_NAME = "logging.logger.name";
+
+  private static final String[] LEVEL_INDICATOR = { "", "E", "W", "I", "D", "X" };
 
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
   private int logLevel = LEVEL_INFO;
-  /**
-   * Returns the current log level
-   */  
-  public int getLogLevel() { return logLevel ; }
-  /**
-   * Set the current log level of this logger.
-   * <br>
-   * The default is LEVEL_ERROR.
-   * @param newLevel The new log level (i.e. one of the LEVEL_ constants of this class)
-   */
-  public void setLogLevel( int newLevel ) { logLevel = newLevel ; }
-  
-  // -------------------------------------------------------------------------
-  
-  private PrintStream printStream = System.out ;
-  protected PrintStream getPrintStream() { return printStream ; }
-  protected void setPrintStream( PrintStream newValue ) { printStream = newValue ; } 
-    
+  private PrintStream printStream = System.out;
+
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
@@ -113,22 +97,39 @@ public class PrintStreamLogger extends AbstractLogger
    */
   public PrintStreamLogger()
   {
-    super() ;
-  } // PrintStreamLogger() 
+    super();
+  }
 
-  // -------------------------------------------------------------------------
-  
   /**
    * Initialize the new instance with a logger name.
    */
   public PrintStreamLogger(String loggerName)
   {
-    super(loggerName) ;
-  } // PrintStreamLogger() 
-  
+    super(loggerName);
+  }
+
   // =========================================================================
   // PUBLIC INSTANCE METHODS
   // =========================================================================
+  /**
+   * Returns the current log level
+   */
+  public int getLogLevel()
+  {
+    return logLevel;
+  }
+
+  /**
+   * Set the current log level of this logger.
+   * <br>
+   * The default is LEVEL_ERROR.
+   * @param newLevel The new log level (i.e. one of the LEVEL_ constants of this class)
+   */
+  public void setLogLevel(int newLevel)
+  {
+    logLevel = newLevel;
+  }
+
   /**
    * Initialize the logger from the given properties settings.
    * Currently the following properties are supported:
@@ -148,25 +149,23 @@ public class PrintStreamLogger extends AbstractLogger
     {
       value = properties.getProperty(PROP_OUTPUT_FILE);
       if (!this.isNullOrBlank(value))
-      {        
+      {
         this.initPrintStream(value.trim());
       }
 
       value = properties.getProperty(PROP_LOG_LEVEL);
       if (!this.isNullOrBlank(value))
-      {        
+      {
         this.initLogLevel(value.trim());
       }
-      
+
       value = properties.getProperty(PROP_LOGGER_NAME);
       if (!this.isNullOrBlank(value))
-      {        
+      {
         this.setLoggerName(value.trim());
       }
     }
-  } // initialize() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Writes the given exception to the log output device(s).
@@ -176,9 +175,7 @@ public class PrintStreamLogger extends AbstractLogger
   public void logException(Throwable ex)
   {
     this.printException(ex);
-  } // logException() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG the given message will be written to
@@ -191,9 +188,7 @@ public class PrintStreamLogger extends AbstractLogger
     {
       this.println(LEVEL_DEBUG, message, params);
     }
-  } // logDebug() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is INFO or DEBUG the given message will be 
@@ -206,9 +201,7 @@ public class PrintStreamLogger extends AbstractLogger
     {
       this.println(LEVEL_INFO, message, params);
     }
-  } // logInfo() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG, INFO or WARNING the given message will 
@@ -221,9 +214,7 @@ public class PrintStreamLogger extends AbstractLogger
     {
       this.println(LEVEL_WARN, message, params);
     }
-  } // logWarning() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG, INFO, WARNING or ERROR the given message 
@@ -236,9 +227,7 @@ public class PrintStreamLogger extends AbstractLogger
     {
       this.println(LEVEL_ERROR, message, params);
     }
-  } // logError() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG, INFO or WARNING the given message
@@ -252,9 +241,7 @@ public class PrintStreamLogger extends AbstractLogger
       this.println(LEVEL_WARN, message);
       this.printException(exception);
     }
-  } // logWarning() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the logging level is DEBUG, INFO, WARNING or ERROR the given message 
@@ -268,9 +255,7 @@ public class PrintStreamLogger extends AbstractLogger
       this.println(LEVEL_ERROR, message);
       this.printException(exception);
     }
-  } // logError() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true, if debug messages will be written to the output device(s).
@@ -279,9 +264,7 @@ public class PrintStreamLogger extends AbstractLogger
   public boolean isLoggingDebugs()
   {
     return (this.getLogLevel() >= LEVEL_DEBUG);
-  } // isLoggingDebugs() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true, if info messages will be written to the output device(s).
@@ -290,9 +273,8 @@ public class PrintStreamLogger extends AbstractLogger
   public boolean isLoggingInfos()
   {
     return (this.getLogLevel() >= LEVEL_INFO);
-  } // isLoggingInfos() 
+  }
 
-  // -------------------------------------------------------------------------
   /**
    * Returns true, if warnings will be written to the output device(s).
    **/
@@ -300,9 +282,7 @@ public class PrintStreamLogger extends AbstractLogger
   public boolean isLoggingWarnings()
   {
     return (this.getLogLevel() >= LEVEL_WARN);
-  } // isLoggingWarnings() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true, if errors will be written to the output device(s).
@@ -311,9 +291,7 @@ public class PrintStreamLogger extends AbstractLogger
   public boolean isLoggingErrors()
   {
     return (this.getLogLevel() >= LEVEL_ERROR);
-  } // isLoggingErrors() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Changes the log level to the specified level. Returns true if the level
@@ -325,9 +303,7 @@ public class PrintStreamLogger extends AbstractLogger
   public boolean setLogLevel(String logLevel)
   {
     return this.initLogLevel(logLevel);
-  } // setLogLevel() 
-
-  // -------------------------------------------------------------------------
+  }
 
   // =========================================================================
   // PROTECTED INSTANCE METHODS
@@ -335,16 +311,14 @@ public class PrintStreamLogger extends AbstractLogger
   protected void print(String text)
   {
     this.getPrintStream().print(text);
-  } // print() 
-  
-  // -------------------------------------------------------------------------
+  }
 
   protected void print(int level, String message, Object... params)
   {
     String text;
-    
+
     text = this.replacePlaceholders(message, params);
-    
+
     if (this.useLevelIndicators())
     {
       this.print(this.getLevelIndicator(level));
@@ -352,24 +326,18 @@ public class PrintStreamLogger extends AbstractLogger
     }
     this.printLoggerNameIfSet();
     this.print(text);
-  } // print() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected void println(int level, String text, Object... params)
   {
     this.print(level, text, params);
     this.println();
-  } // println() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected void println()
   {
     this.print("\n");
-  } // println() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected void printLoggerNameIfSet()
   {
@@ -378,17 +346,13 @@ public class PrintStreamLogger extends AbstractLogger
       this.print(this.getName());
       this.print(" ");
     }
-  } // printLoggerNameIfSet() 
-  
-  // -------------------------------------------------------------------------
-  
+  }
+
   protected void printException(Throwable ex)
   {
     this.printLoggerNameIfSet();
     ex.printStackTrace(this.getPrintStream());
-  } // printException() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected String getLevelIndicator(int level)
   {
@@ -397,13 +361,14 @@ public class PrintStreamLogger extends AbstractLogger
       return LEVEL_INDICATOR[LEVEL_INDICATOR.length - 1];
     }
     return LEVEL_INDICATOR[level];
-  } // getLevelIndicator() 
+  }
 
   protected boolean useLevelIndicators()
   {
     return true;
-  } // useLevelIndicators() 
+  }
 
+  @SuppressWarnings("resource")
   protected void initPrintStream(String filename)
   {
     File file = null;
@@ -424,7 +389,7 @@ public class PrintStreamLogger extends AbstractLogger
         this.logError("Failed to create file '" + filename + "' for logging", ex);
       }
     }
-  } // initPrintStream() 
+  }
 
   protected boolean initLogLevel(String level)
   {
@@ -463,5 +428,15 @@ public class PrintStreamLogger extends AbstractLogger
     }
 
     return true;
-  } // initLogLevel()  
-} 
+  }
+
+  protected PrintStream getPrintStream()
+  {
+    return this.printStream;
+  }
+
+  protected void setPrintStream(PrintStream newValue)
+  {
+    this.printStream = newValue;
+  }
+}
