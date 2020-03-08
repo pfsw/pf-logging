@@ -2,17 +2,19 @@ apply plugin: 'java'
 
 def includePath = project.pfswGradleIncludePath // usually specified in $GRADLE_USER_HOME/gradle.properties
 
-version = '3.2.0'
+version = '3.3.0'
 archivesBaseName = "pf-logging"
 
 ext {
   javaVersion = '1.6'
+  javaModuleNameSuffix = 'logging'
   localTestLibDir = "${buildDir}/test-libs"
   localTestArchive = "pf-logging-test-plugins.jar"
 }
 
 apply from: "${includePath}/common/ext-variables.gradle"
 apply from: "${includePath}/common/repositories.gradle"
+apply from: "${includePath}/java/java-6-compile.gradle"
 apply from: "${includePath}/java/java-compatibility.gradle"
 apply from: "${includePath}/java/publishing-java-full.gradle"
 
@@ -21,6 +23,6 @@ dependencies {
   testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.14.1' }
+wrapper { gradleVersion = '6.2.2' }
 
-println "${project.name} ${project.version}"
+println "${project.name} ${project.version} (autoModuleName: ${autoModuleName})"

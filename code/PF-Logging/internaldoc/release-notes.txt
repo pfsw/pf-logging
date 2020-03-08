@@ -3,6 +3,14 @@ RELEASE NOTES FOR PACKAGE PF-Logging
 
 -------------------------------------------------------------------------------
 
+VERSION 3.3.0 (08/03/2020) - 59 Unit Tests
+
+* Upgrade to gradle 6.2.2
+
+* Added Automatic-Module-Name to manifest file
+
+-------------------------------------------------------------------------------
+
 VERSION 3.2.0 (27/12/2018) - 59 Unit Tests
 
 * Clean code
