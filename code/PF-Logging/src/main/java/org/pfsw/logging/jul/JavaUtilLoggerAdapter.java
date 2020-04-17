@@ -67,7 +67,7 @@ class JavaUtilLoggerAdapter implements Logger
   @Override
   public String getName()
   {
-    return this.getJulLogger().getName();
+    return getJulLogger().getName();
   }
 
   @Override
@@ -81,67 +81,67 @@ class JavaUtilLoggerAdapter implements Logger
   @Override
   public void logException(Throwable ex)
   {
-    this.getJulLogger().log(Level.ALL, "Exception: ", ex);
+    getJulLogger().log(Level.ALL, "Exception: ", ex);
   }
 
   @Override
   public void logDebug(String message, Object... params)
   {
-    this.getJulLogger().log(DEBUG_LEVEL, message, params);
+    getJulLogger().log(DEBUG_LEVEL, message, params);
   }
 
   @Override
   public void logInfo(String message, Object... params)
   {
-    this.getJulLogger().log(Level.INFO, message, params);
+    getJulLogger().log(Level.INFO, message, params);
   }
 
   @Override
   public void logWarning(String message, Object... params)
   {
-    this.getJulLogger().log(Level.WARNING, message, params);
+    getJulLogger().log(Level.WARNING, message, params);
   }
   
   @Override
   public void logError(String message, Object... params)
   {
-    this.getJulLogger().log(Level.SEVERE, message, params);    
+    getJulLogger().log(Level.SEVERE, message, params);    
   }
 
   @Override
   public void logWarning(String message, Throwable exception)
   {
-    this.getJulLogger().log(Level.WARNING, message, exception);    
+    getJulLogger().log(Level.WARNING, message, exception);    
   }
 
   @Override
   public void logError(String message, Throwable exception)
   {
-    this.getJulLogger().log(Level.SEVERE, message, exception);    
+    getJulLogger().log(Level.SEVERE, message, exception);    
   }
 
   @Override
   public boolean isLoggingDebugs()
   {
-    return this.getJulLogger().isLoggable(DEBUG_LEVEL);
+    return getJulLogger().isLoggable(DEBUG_LEVEL);
   }
 
   @Override
   public boolean isLoggingInfos()
   {
-    return this.getJulLogger().isLoggable(Level.INFO);
+    return getJulLogger().isLoggable(Level.INFO);
   }
 
   @Override
   public boolean isLoggingWarnings()
   {
-    return this.getJulLogger().isLoggable(Level.WARNING);
+    return getJulLogger().isLoggable(Level.WARNING);
   }
 
   @Override
   public boolean isLoggingErrors()
   {
-    return this.getJulLogger().isLoggable(Level.SEVERE);
+    return getJulLogger().isLoggable(Level.SEVERE);
   }
 
   @Override
@@ -154,7 +154,7 @@ class JavaUtilLoggerAdapter implements Logger
     {
       return false;
     }
-    this.getJulLogger().setLevel(logLevel.getJULLevel());
+    getJulLogger().setLevel(logLevel.getJULLevel());
     return true;
   }
   

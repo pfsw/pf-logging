@@ -23,6 +23,6 @@ dependencies {
   testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 }
 
-wrapper { gradleVersion = '6.2.2' }
+wrapper { gradleVersion = '6.3' }
 
 println "${project.name} ${project.version} (autoModuleName: ${autoModuleName})"

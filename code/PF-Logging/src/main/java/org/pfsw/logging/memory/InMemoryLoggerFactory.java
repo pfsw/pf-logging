@@ -7,13 +7,10 @@
 //
 // Copyright (c) 2017, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.logging.memory ;
+package org.pfsw.logging.memory;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import org.pfsw.logging.Logger;
-import org.pfsw.logging.LoggerFactory ;
+import org.pfsw.logging.LoggerFactory;
 
 /**
  * This factory produces logger instances that keep all log output in memory. 
@@ -33,7 +30,7 @@ public class InMemoryLoggerFactory implements LoggerFactory
   // =========================================================================
   public InMemoryLoggerFactory()
   {
-    super() ;
+    super();
   }
 
   // =========================================================================
@@ -44,19 +41,19 @@ public class InMemoryLoggerFactory implements LoggerFactory
   {
     return LOGGER_TYPE;
   }
-  
+
   @Override
   public Logger createLogger()
   {
-    return this.getLogger(Logger.ANONYMOUS_LOGGER_NAME);
+    return getLogger(Logger.ANONYMOUS_LOGGER_NAME);
   }
 
   @Override
   public Logger getLogger(Class<?> clazz)
   {
-    return this.getLogger(clazz.getName());
+    return getLogger(clazz.getName());
   }
-  
+
   @Override
   public Logger getLogger(String loggerName)
   {

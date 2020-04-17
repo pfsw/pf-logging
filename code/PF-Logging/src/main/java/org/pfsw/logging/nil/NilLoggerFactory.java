@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.logging.nil;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import org.pfsw.logging.Logger;
 import org.pfsw.logging.LoggerBindingNames;
 import org.pfsw.logging.LoggerFactory;

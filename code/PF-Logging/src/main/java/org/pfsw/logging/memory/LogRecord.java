@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.logging.memory;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import org.pfsw.logging.LogLevel;
 
 /**
@@ -28,7 +25,7 @@ public class LogRecord
   private final LogLevel logLevel;
   private final String message;
   private final Throwable exception;
-  
+
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
@@ -52,12 +49,12 @@ public class LogRecord
   {
     return this.logLevel;
   }
-  
+
   public String getMessage()
   {
     return this.message;
   }
-  
+
   public Throwable getException()
   {
     return this.exception;

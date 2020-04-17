@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.logging.internal;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.text.MessageFormat;
 import org.pfsw.logging.Logger;
 
@@ -39,7 +36,7 @@ public abstract class AbstractLogger implements Logger
   public AbstractLogger(String loggerName)
   {
     super();
-    this.setLoggerName(loggerName);
+    setLoggerName(loggerName);
   }
 
   // =========================================================================

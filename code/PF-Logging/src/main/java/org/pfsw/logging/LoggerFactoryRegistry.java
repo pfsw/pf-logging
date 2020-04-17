@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.logging ;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +41,7 @@ class LoggerFactoryRegistry
   {
     if (loggerFactory != null)
     {
-      this.getFactoriesMap().put(loggerFactory.getName(), loggerFactory);
+      getFactoriesMap().put(loggerFactory.getName(), loggerFactory);
     }
   }
   
@@ -54,7 +51,7 @@ class LoggerFactoryRegistry
     {
       return null;
     }
-    return this.getFactoriesMap().get(name);
+    return getFactoriesMap().get(name);
   }
   
   // =========================================================================

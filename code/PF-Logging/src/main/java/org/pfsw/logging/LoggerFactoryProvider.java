@@ -12,9 +12,6 @@
 // ===========================================================================
 package org.pfsw.logging;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.util.ServiceLoader;
 
 import org.pfsw.logging.deferred.DeferredInitializationLoggerFactory;

@@ -13,9 +13,6 @@
 // ===========================================================================
 package org.pfsw.logging.stdout;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -148,21 +145,21 @@ public class PrintStreamLogger extends AbstractLogger
     if (properties != null)
     {
       value = properties.getProperty(PROP_OUTPUT_FILE);
-      if (!this.isNullOrBlank(value))
+      if (!isNullOrBlank(value))
       {
-        this.initPrintStream(value.trim());
+        initPrintStream(value.trim());
       }
 
       value = properties.getProperty(PROP_LOG_LEVEL);
-      if (!this.isNullOrBlank(value))
+      if (!isNullOrBlank(value))
       {
-        this.initLogLevel(value.trim());
+        initLogLevel(value.trim());
       }
 
       value = properties.getProperty(PROP_LOGGER_NAME);
-      if (!this.isNullOrBlank(value))
+      if (!isNullOrBlank(value))
       {
-        this.setLoggerName(value.trim());
+        setLoggerName(value.trim());
       }
     }
   }
@@ -174,7 +171,7 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public void logException(Throwable ex)
   {
-    this.printException(ex);
+    printException(ex);
   }
 
   /**
@@ -184,9 +181,9 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public void logDebug(String message, Object... params)
   {
-    if (this.isLoggingDebugs())
+    if (isLoggingDebugs())
     {
-      this.println(LEVEL_DEBUG, message, params);
+      println(LEVEL_DEBUG, message, params);
     }
   }
 
@@ -197,9 +194,9 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public void logInfo(String message, Object... params)
   {
-    if (this.isLoggingInfos())
+    if (isLoggingInfos())
     {
-      this.println(LEVEL_INFO, message, params);
+      println(LEVEL_INFO, message, params);
     }
   }
 
@@ -210,9 +207,9 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public void logWarning(String message, Object... params)
   {
-    if (this.isLoggingWarnings())
+    if (isLoggingWarnings())
     {
-      this.println(LEVEL_WARN, message, params);
+      println(LEVEL_WARN, message, params);
     }
   }
 
@@ -223,9 +220,9 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public void logError(String message, Object... params)
   {
-    if (this.isLoggingErrors())
+    if (isLoggingErrors())
     {
-      this.println(LEVEL_ERROR, message, params);
+      println(LEVEL_ERROR, message, params);
     }
   }
 
@@ -236,10 +233,10 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public void logWarning(String message, Throwable exception)
   {
-    if (this.isLoggingWarnings())
+    if (isLoggingWarnings())
     {
-      this.println(LEVEL_WARN, message);
-      this.printException(exception);
+      println(LEVEL_WARN, message);
+      printException(exception);
     }
   }
 
@@ -250,10 +247,10 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public void logError(String message, Throwable exception)
   {
-    if (this.isLoggingErrors())
+    if (isLoggingErrors())
     {
-      this.println(LEVEL_ERROR, message);
-      this.printException(exception);
+      println(LEVEL_ERROR, message);
+      printException(exception);
     }
   }
 
@@ -263,7 +260,7 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public boolean isLoggingDebugs()
   {
-    return (this.getLogLevel() >= LEVEL_DEBUG);
+    return (getLogLevel() >= LEVEL_DEBUG);
   }
 
   /**
@@ -272,7 +269,7 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public boolean isLoggingInfos()
   {
-    return (this.getLogLevel() >= LEVEL_INFO);
+    return (getLogLevel() >= LEVEL_INFO);
   }
 
   /**
@@ -281,7 +278,7 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public boolean isLoggingWarnings()
   {
-    return (this.getLogLevel() >= LEVEL_WARN);
+    return (getLogLevel() >= LEVEL_WARN);
   }
 
   /**
@@ -290,7 +287,7 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public boolean isLoggingErrors()
   {
-    return (this.getLogLevel() >= LEVEL_ERROR);
+    return (getLogLevel() >= LEVEL_ERROR);
   }
 
   /**
@@ -302,7 +299,7 @@ public class PrintStreamLogger extends AbstractLogger
   @Override
   public boolean setLogLevel(String logLevel)
   {
-    return this.initLogLevel(logLevel);
+    return initLogLevel(logLevel);
   }
 
   // =========================================================================
@@ -310,48 +307,48 @@ public class PrintStreamLogger extends AbstractLogger
   // =========================================================================
   protected void print(String text)
   {
-    this.getPrintStream().print(text);
+    getPrintStream().print(text);
   }
 
   protected void print(int level, String message, Object... params)
   {
     String text;
 
-    text = this.replacePlaceholders(message, params);
+    text = replacePlaceholders(message, params);
 
-    if (this.useLevelIndicators())
+    if (useLevelIndicators())
     {
-      this.print(this.getLevelIndicator(level));
-      this.print(" ");
+      print(getLevelIndicator(level));
+      print(" ");
     }
-    this.printLoggerNameIfSet();
-    this.print(text);
+    printLoggerNameIfSet();
+    print(text);
   }
 
   protected void println(int level, String text, Object... params)
   {
-    this.print(level, text, params);
-    this.println();
+    print(level, text, params);
+    println();
   }
 
   protected void println()
   {
-    this.print("\n");
+    print("\n");
   }
 
   protected void printLoggerNameIfSet()
   {
-    if (!this.isNullOrEmpty(this.getName()))
+    if (!isNullOrEmpty(getName()))
     {
-      this.print(this.getName());
-      this.print(" ");
+      print(getName());
+      print(" ");
     }
   }
 
   protected void printException(Throwable ex)
   {
-    this.printLoggerNameIfSet();
-    ex.printStackTrace(this.getPrintStream());
+    printLoggerNameIfSet();
+    ex.printStackTrace(getPrintStream());
   }
 
   protected String getLevelIndicator(int level)
@@ -382,11 +379,11 @@ public class PrintStreamLogger extends AbstractLogger
         file = new File(filename);
         os = new FileOutputStream(file);
         ps = new PrintStream(os);
-        this.setPrintStream(ps);
+        setPrintStream(ps);
       }
       catch (IOException ex)
       {
-        this.logError("Failed to create file '" + filename + "' for logging", ex);
+        logError("Failed to create file '" + filename + "' for logging", ex);
       }
     }
   }
@@ -404,23 +401,23 @@ public class PrintStreamLogger extends AbstractLogger
 
     if (LL_NONE.equals(levelName))
     {
-      this.setLogLevel(LEVEL_NONE);
+      setLogLevel(LEVEL_NONE);
     }
     else if (LL_ERROR.equals(levelName))
     {
-      this.setLogLevel(LEVEL_ERROR);
+      setLogLevel(LEVEL_ERROR);
     }
     else if (LL_WARNING.equals(levelName))
     {
-      this.setLogLevel(LEVEL_WARN);
+      setLogLevel(LEVEL_WARN);
     }
     else if (LL_INFO.equals(levelName))
     {
-      this.setLogLevel(LEVEL_INFO);
+      setLogLevel(LEVEL_INFO);
     }
     else if (LL_DEBUG.equals(levelName))
     {
-      this.setLogLevel(LEVEL_DEBUG);
+      setLogLevel(LEVEL_DEBUG);
     }
     else
     {

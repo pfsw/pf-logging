@@ -10,9 +10,6 @@
 // ===========================================================================
 package org.pfsw.logging.stdout;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import org.pfsw.logging.Logger;
 import org.pfsw.logging.LoggerFactory;
 
@@ -62,7 +59,7 @@ public class PrintStreamLoggerFactory implements LoggerFactory
   @Override
   public Logger getLogger(Class<?> clazz)
   {
-    return this.getLogger(clazz.getName());
+    return getLogger(clazz.getName());
   }
 
 }

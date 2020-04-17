@@ -58,6 +58,6 @@ public class JavaUtilLoggerFactory implements LoggerFactory
   @Override
   public Logger getLogger(Class<?> clazz)
   {
-    return this.getLogger(clazz.getName());
+    return getLogger(clazz.getName());
   }
 }

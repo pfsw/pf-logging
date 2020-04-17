@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.logging.memory;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -56,85 +53,85 @@ public class InMemoryLogger extends AbstractLogger
   @Override
   public boolean isLoggingDebugs()
   {
-    return this.getLogLevel() == LogLevel.DEBUG;
+    return getLogLevel() == LogLevel.DEBUG;
   }
 
   @Override
   public boolean isLoggingInfos()
   {
-    return (this.getLogLevel() == LogLevel.INFO) || isLoggingDebugs();
+    return (getLogLevel() == LogLevel.INFO) || isLoggingDebugs();
   }
 
   @Override
   public boolean isLoggingWarnings()
   {
-    return (this.getLogLevel() == LogLevel.WARN) || isLoggingInfos();
+    return (getLogLevel() == LogLevel.WARN) || isLoggingInfos();
   }
 
   @Override
   public boolean isLoggingErrors()
   {
-    return (this.getLogLevel() == LogLevel.ERROR) || isLoggingWarnings();
+    return (getLogLevel() == LogLevel.ERROR) || isLoggingWarnings();
   }
 
   @Override
   public void logDebug(String message, Object... params)
   {
-    if (this.isLoggingDebugs())
+    if (isLoggingDebugs())
     {
-      this.add(LogLevel.DEBUG, message, params);
+      add(LogLevel.DEBUG, message, params);
     }
   }
 
   @Override
   public void logInfo(String message, Object... params)
   {
-    if (this.isLoggingInfos())
+    if (isLoggingInfos())
     {
-      this.add(LogLevel.INFO, message, params);
+      add(LogLevel.INFO, message, params);
     }
   }
 
   @Override
   public void logWarning(String message, Object... params)
   {
-    if (this.isLoggingWarnings())
+    if (isLoggingWarnings())
     {
-      this.add(LogLevel.WARN, message, params);
+      add(LogLevel.WARN, message, params);
     }
   }
 
   @Override
   public void logWarning(String message, Throwable exception)
   {
-    if (this.isLoggingWarnings())
+    if (isLoggingWarnings())
     {
-      this.add(LogLevel.WARN, exception, message);
+      add(LogLevel.WARN, exception, message);
     }
   }
 
   @Override
   public void logError(String message, Object... params)
   {
-    if (this.isLoggingErrors())
+    if (isLoggingErrors())
     {
-      this.add(LogLevel.ERROR, message, params);
+      add(LogLevel.ERROR, message, params);
     }
   }
 
   @Override
   public void logError(String message, Throwable exception)
   {
-    if (this.isLoggingErrors())
+    if (isLoggingErrors())
     {
-      this.add(LogLevel.ERROR, exception, message);
+      add(LogLevel.ERROR, exception, message);
     }
   }
 
   @Override
   public void logException(Throwable exception)
   {
-    this.add(this.getLogLevel(), exception, "");
+    add(getLogLevel(), exception, "");
   }
 
   @Override
@@ -147,23 +144,23 @@ public class InMemoryLogger extends AbstractLogger
     {
       return false;
     }
-    this.setLogLevel(pfLevel);
+    setLogLevel(pfLevel);
     return false;
   }
 
   public int size()
   {
-    return this.getLogEntries().size();
+    return getLogEntries().size();
   }
 
   public boolean isEmpty()
   {
-    return this.getLogEntries().isEmpty();
+    return getLogEntries().isEmpty();
   }
 
   public void clear()
   {
-    this.getLogEntries().clear();
+    getLogEntries().clear();
   }
 
   /**
@@ -178,7 +175,7 @@ public class InMemoryLogger extends AbstractLogger
     List<LogRecord> result;
 
     result = new ArrayList<LogRecord>();
-    for (LogRecord logRecord : this.getLogEntries())
+    for (LogRecord logRecord : getLogEntries())
     {
       if (logRecord.getMessage().contains(text))
       {
@@ -190,14 +187,14 @@ public class InMemoryLogger extends AbstractLogger
 
   public List<LogRecord> getLogEntries()
   {
-    return this.logEntries;
+    return logEntries;
   }
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
   protected synchronized void add(LogLevel level, String message, Object... params)
   {
-    this.add(level, null, message, params);
+    add(level, null, message, params);
   }
 
   protected synchronized void add(LogLevel level, Throwable exception, String message, Object... params)
@@ -205,9 +202,9 @@ public class InMemoryLogger extends AbstractLogger
     LogRecord record;
     String text;
 
-    text = this.replacePlaceholders(message, params);
+    text = replacePlaceholders(message, params);
     record = new LogRecord(level, text, exception);
-    this.getLogEntries().add(record);
+    getLogEntries().add(record);
   }
 
   protected LogLevel getLogLevel()
