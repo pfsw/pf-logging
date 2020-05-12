@@ -18,6 +18,8 @@ import java.util.Properties;
 
 import org.junit.Test;
 import org.pfsw.logging.Logger;
+import org.pfsw.logging.LoggerFactoryProvider;
+import org.pfsw.logging.internal.SystemPropertyName;
 import org.pfsw.logging.stdout.PrintStreamLogger;
 import org.pfsw.logging.testhelper.InMemoryPrintStream;
 
@@ -101,6 +103,20 @@ public class PrintStreamLoggerTest
     assertTrue(logger.isLoggingErrors());
   } 
 
+  @Test
+  public void test_logLevel_DEBUG_via_system_property() throws Exception
+  {
+    Logger logger;
+
+    System.setProperty(SystemPropertyName.LOG_LEVEL.asString(), "debug");
+    logger = LoggerFactoryProvider.getLogger("dummy");
+    
+    assertTrue(logger.isLoggingDebugs());
+    assertTrue(logger.isLoggingInfos());
+    assertTrue(logger.isLoggingWarnings());
+    assertTrue(logger.isLoggingErrors());
+  } 
+  
   @Test
   public void test_logLevel_5() throws Exception
   {
