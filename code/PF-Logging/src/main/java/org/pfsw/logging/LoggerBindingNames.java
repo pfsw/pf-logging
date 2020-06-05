@@ -59,4 +59,22 @@ public interface LoggerBindingNames
    * that forwards all log output to Apache Logging for Java. 
    */
   public static final String LOG4J = "LOG4J";
+  
+  /**
+   * The LoggerFactory with this name binds to an implementation
+   * that forwards all log output to Apache Logging for Java. 
+   */
+  public static final String LOG4J2 = "LOG4J2";
+  
+  /**
+   * The LoggerFactory with this name binds to an implementation
+   * that forwards all log output to JBoss logging. 
+   */
+  public static final String JBOSS_LOGGING = "JBL";
+  
+  /**
+   * The LoggerFactory with this name binds to an implementation
+   * that forwards all log output to JBoss logging. 
+   */
+  public static final String LOGBACK = "LOGBACK";
 }

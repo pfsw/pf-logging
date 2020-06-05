@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.logging;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.util.Properties;
 
 /**
@@ -49,79 +46,79 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public String getName()
   {
-    return this.getDelegateLogger().getName();
+    return getDelegateLogger().getName();
   }
 
   @Override
   public void initialize(Properties properties)
   {
-    this.getDelegateLogger().initialize(properties);
+    getDelegateLogger().initialize(properties);
   }
 
   @Override
   public boolean isLoggingDebugs()
   {
-    return this.getDelegateLogger().isLoggingDebugs();
+    return getDelegateLogger().isLoggingDebugs();
   }
 
   @Override
   public boolean isLoggingInfos()
   {
-    return this.getDelegateLogger().isLoggingInfos();
+    return getDelegateLogger().isLoggingInfos();
   }
 
   @Override
   public boolean isLoggingWarnings()
   {
-    return this.getDelegateLogger().isLoggingWarnings();
+    return getDelegateLogger().isLoggingWarnings();
   }
 
   @Override
   public boolean isLoggingErrors()
   {
-    return this.getDelegateLogger().isLoggingErrors();
+    return getDelegateLogger().isLoggingErrors();
   }
 
   @Override
   public void logDebug(String message, Object... params)
   {
-    this.getDelegateLogger().logDebug(message, params);
+    getDelegateLogger().logDebug(message, params);
   }
 
   @Override
   public void logInfo(String message, Object... params)
   {
-    this.getDelegateLogger().logInfo(message, params);
+    getDelegateLogger().logInfo(message, params);
   }
 
   @Override
   public void logWarning(String message, Object... params)
   {
-    this.getDelegateLogger().logWarning(message, params);
+    getDelegateLogger().logWarning(message, params);
   }
 
   @Override
   public void logWarning(String message, Throwable exception)
   {
-    this.getDelegateLogger().logWarning(message, exception);
+    getDelegateLogger().logWarning(message, exception);
   }
 
   @Override
   public void logError(String message, Object... params)
   {
-    this.getDelegateLogger().logError(message, params);
+    getDelegateLogger().logError(message, params);
   }
 
   @Override
   public void logError(String message, Throwable exception)
   {
-    this.getDelegateLogger().logError(message, exception);
+    getDelegateLogger().logError(message, exception);
   }
 
   @Override
   public void logException(Throwable ex)
   {
-    this.getDelegateLogger().logException(ex);
+    getDelegateLogger().logException(ex);
   }
 
   @Override
@@ -134,7 +131,7 @@ public class Logger2Logger implements Logger, Logger2
     {
       return false;
     }
-    this.setLogLevel(newLevel);
+    setLogLevel(newLevel);
     return true;
   }
 
@@ -144,7 +141,7 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public String getLoggerName()
   {
-    return this.getDelegateLogger().getName();
+    return getDelegateLogger().getName();
   }
 
   @Override
@@ -157,7 +154,7 @@ public class Logger2Logger implements Logger, Logger2
   public void setLogLevel(LogLevel level)
   {
     this.logLevel = level;
-    this.getDelegateLogger().setLogLevel(level.getPFLevel());
+    getDelegateLogger().setLogLevel(level.getPFLevel());
   }
 
   /**
@@ -173,13 +170,13 @@ public class Logger2Logger implements Logger, Logger2
     switch (level)
     {
       case DEBUG :
-        return this.isDebugEnabled();
+        return isDebugEnabled();
       case INFO :
-        return this.isInfoEnabled();
+        return isInfoEnabled();
       case WARN :
-        return this.isWarnEnabled();
+        return isWarnEnabled();
       case ERROR :
-        return this.isErrorEnabled();
+        return isErrorEnabled();
       default :
         return false;
     }
@@ -191,7 +188,7 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public boolean isDebugEnabled()
   {
-    return this.getDelegateLogger().isLoggingDebugs();
+    return getDelegateLogger().isLoggingDebugs();
   }
 
   /**
@@ -200,7 +197,7 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public boolean isInfoEnabled()
   {
-    return this.getDelegateLogger().isLoggingInfos();
+    return getDelegateLogger().isLoggingInfos();
   }
 
   /**
@@ -209,7 +206,7 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public boolean isWarnEnabled()
   {
-    return this.getDelegateLogger().isLoggingWarnings();
+    return getDelegateLogger().isLoggingWarnings();
   }
 
   /**
@@ -218,7 +215,7 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public boolean isErrorEnabled()
   {
-    return this.getDelegateLogger().isLoggingErrors();
+    return getDelegateLogger().isLoggingErrors();
   }
 
   /**
@@ -229,9 +226,9 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public void debugf(String msgTemplate, Object... params)
   {
-    if (this.isDebugEnabled())
+    if (isDebugEnabled())
     {
-      this.getDelegateLogger().logDebug(this.getLogMessage(msgTemplate, params));
+      getDelegateLogger().logDebug(getLogMessage(msgTemplate, params));
     }
   }
 
@@ -246,10 +243,10 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public void debugf(Throwable t, String msgTemplate, Object... params)
   {
-    if (this.isDebugEnabled())
+    if (isDebugEnabled())
     {
-      this.getDelegateLogger().logDebug(this.getLogMessage(msgTemplate, params));
-      this.getDelegateLogger().logException(t);
+      getDelegateLogger().logDebug(getLogMessage(msgTemplate, params));
+      getDelegateLogger().logException(t);
     }
   }
 
@@ -261,9 +258,9 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public void infof(String msgTemplate, Object... params)
   {
-    if (this.isInfoEnabled())
+    if (isInfoEnabled())
     {
-      this.getDelegateLogger().logInfo(this.getLogMessage(msgTemplate, params));
+      getDelegateLogger().logInfo(getLogMessage(msgTemplate, params));
     }
   }
 
@@ -278,10 +275,10 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public void infof(Throwable t, String msgTemplate, Object... params)
   {
-    if (this.isInfoEnabled())
+    if (isInfoEnabled())
     {
-      this.getDelegateLogger().logInfo(this.getLogMessage(msgTemplate, params));
-      this.getDelegateLogger().logException(t);
+      getDelegateLogger().logInfo(getLogMessage(msgTemplate, params));
+      getDelegateLogger().logException(t);
     }
   }
 
@@ -293,9 +290,9 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public void warnf(String msgTemplate, Object... params)
   {
-    if (this.isWarnEnabled())
+    if (isWarnEnabled())
     {
-      this.getDelegateLogger().logWarning(this.getLogMessage(msgTemplate, params));
+      getDelegateLogger().logWarning(getLogMessage(msgTemplate, params));
     }
   }
 
@@ -310,9 +307,9 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public void warnf(Throwable t, String msgTemplate, Object... params)
   {
-    if (this.isWarnEnabled())
+    if (isWarnEnabled())
     {
-      this.getDelegateLogger().logWarning(this.getLogMessage(msgTemplate, params), t);
+      getDelegateLogger().logWarning(getLogMessage(msgTemplate, params), t);
     }
   }
 
@@ -324,9 +321,9 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public void errorf(String msgTemplate, Object... params)
   {
-    if (this.isErrorEnabled())
+    if (isErrorEnabled())
     {
-      this.getDelegateLogger().logError(this.getLogMessage(msgTemplate, params));
+      getDelegateLogger().logError(getLogMessage(msgTemplate, params));
     }
   }
 
@@ -341,9 +338,9 @@ public class Logger2Logger implements Logger, Logger2
   @Override
   public void errorf(Throwable t, String msgTemplate, Object... params)
   {
-    if (this.isErrorEnabled())
+    if (isErrorEnabled())
     {
-      this.getDelegateLogger().logError(this.getLogMessage(msgTemplate, params), t);
+      getDelegateLogger().logError(getLogMessage(msgTemplate, params), t);
     }
   }
 
@@ -362,16 +359,16 @@ public class Logger2Logger implements Logger, Logger2
     switch (level)
     {
       case DEBUG :
-        this.debugf(msgTemplate, params);
+        debugf(msgTemplate, params);
         break;
       case INFO :
-        this.infof(msgTemplate, params);
+        infof(msgTemplate, params);
         break;
       case WARN :
-        this.warnf(msgTemplate, params);
+        warnf(msgTemplate, params);
         break;
       case ERROR :
-        this.errorf(msgTemplate, params);
+        errorf(msgTemplate, params);
         break;
       default :
         break;
@@ -396,16 +393,16 @@ public class Logger2Logger implements Logger, Logger2
     switch (level)
     {
       case DEBUG :
-        this.debugf(t, msgTemplate, params);
+        debugf(t, msgTemplate, params);
         break;
       case INFO :
-        this.infof(t, msgTemplate, params);
+        infof(t, msgTemplate, params);
         break;
       case WARN :
-        this.warnf(t, msgTemplate, params);
+        warnf(t, msgTemplate, params);
         break;
       case ERROR :
-        this.errorf(t, msgTemplate, params);
+        errorf(t, msgTemplate, params);
         break;
       default :
         break;
