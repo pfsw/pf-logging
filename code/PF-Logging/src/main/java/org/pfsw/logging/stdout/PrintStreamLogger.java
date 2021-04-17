@@ -1,22 +1,19 @@
 // ===========================================================================
 // CONTENT  : CLASS PrintStreamLogger
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 1.3 - 21/06/2014
+// VERSION  : 2.0 - 06/04/2021
 // HISTORY  :
 //  30/11/2001  duma  CREATED
 //	17/10/2003	duma	changed	-->	log level constants and methods are now public
 //	06/11/2003	duma	changed	-->	Check properties == null in initialize()
 //	20/12/2003	duma	changed	-->	Visibility of setLogLevel() from protected to public
 //  21/06/2014  mdu   added   --> getName() and var-arg methods
+//  06/04/2021  mdu   changed --> Use LogMessageOutputTarget rather than PrintStream
 //
-// Copyright (c) 2001-2014, by Manfred Duchrow. All rights reserved.
+// Copyright (c) 2001-2021, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.logging.stdout;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Properties;
 
 import org.pfsw.logging.internal.AbstractLogger;
@@ -31,7 +28,7 @@ import org.pfsw.logging.internal.AbstractLogger;
  * 'logging.level' (e.g. logging.level=WARNING). 
  *
  * @author Manfred Duchrow
- * @version 1.3
+ * @version 2.0
  */
 public class PrintStreamLogger extends AbstractLogger
 {
@@ -78,13 +75,27 @@ public class PrintStreamLogger extends AbstractLogger
    */
   public static final String PROP_LOGGER_NAME = "logging.logger.name";
 
-  private static final String[] LEVEL_INDICATOR = { "", "E", "W", "I", "D", "X" };
+  private static final String[] LEVEL_INDICATOR_SHORT = { " ", "E", "W", "I", "D", "T" };
+  private static final String[] LEVEL_INDICATOR_LONG = { "     ", "ERROR", "WARN ", "INFO ", "DEBUG", "TRACE" };
 
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
   private int logLevel = LEVEL_INFO;
-  private PrintStream printStream = System.out;
+  private LogMessageOutputTarget outputTarget = LogMessageOutputPrintStream.create();
+
+  // =========================================================================
+  // CLASS METHODS
+  // =========================================================================  
+  /**
+   * Create a new instance with a logger name.
+   */
+  public static PrintStreamLogger create(String loggerName)
+  {
+    PrintStreamLogger printStreamLogger = new PrintStreamLogger(loggerName);
+    printStreamLogger.setOutputTarget(LogMessageOutputTargetRegistry.getOutputTarget(loggerName));
+    return printStreamLogger;
+  }
 
   // =========================================================================
   // CONSTRUCTORS
@@ -301,13 +312,13 @@ public class PrintStreamLogger extends AbstractLogger
   {
     return initLogLevel(logLevel);
   }
-
+  
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
   protected void print(String text)
   {
-    getPrintStream().print(text);
+    getOutputTarget().print(text);
   }
 
   protected void print(int level, String message, Object... params)
@@ -316,6 +327,12 @@ public class PrintStreamLogger extends AbstractLogger
 
     text = replacePlaceholders(message, params);
 
+    if (PrintStreamOptions.isTimestampEnabled())
+    {
+      print(PrintStreamOptions.getCurrentTimestampString());
+      print(" ");
+    }
+    
     if (useLevelIndicators())
     {
       print(getLevelIndicator(level));
@@ -348,43 +365,32 @@ public class PrintStreamLogger extends AbstractLogger
   protected void printException(Throwable ex)
   {
     printLoggerNameIfSet();
-    ex.printStackTrace(getPrintStream());
+    getOutputTarget().printException(ex);
   }
 
   protected String getLevelIndicator(int level)
   {
-    if ((level < 0) || (level >= LEVEL_INDICATOR.length))
+    String[] levelIndicator;
+    
+    levelIndicator = (PrintStreamOptions.getPrintLogLevel() == PrintLogLevel.LONG) ? LEVEL_INDICATOR_LONG : LEVEL_INDICATOR_SHORT;
+    
+    if ((level < 0) || (level >= levelIndicator.length))
     {
-      return LEVEL_INDICATOR[LEVEL_INDICATOR.length - 1];
+      return levelIndicator[levelIndicator.length - 1];
     }
-    return LEVEL_INDICATOR[level];
+    return levelIndicator[level];
   }
 
   protected boolean useLevelIndicators()
   {
-    return true;
+    return PrintStreamOptions.getPrintLogLevel() != PrintLogLevel.NONE;
   }
 
-  @SuppressWarnings("resource")
   protected void initPrintStream(String filename)
   {
-    File file = null;
-    FileOutputStream os = null;
-    PrintStream ps = null;
-
     if (filename != null)
     {
-      try
-      {
-        file = new File(filename);
-        os = new FileOutputStream(file);
-        ps = new PrintStream(os);
-        setPrintStream(ps);
-      }
-      catch (IOException ex)
-      {
-        logError("Failed to create file '" + filename + "' for logging", ex);
-      }
+      setOutputTarget(LogMessageOutputPrintStream.create(filename));
     }
   }
 
@@ -427,13 +433,13 @@ public class PrintStreamLogger extends AbstractLogger
     return true;
   }
 
-  protected PrintStream getPrintStream()
+  protected LogMessageOutputTarget getOutputTarget()
   {
-    return this.printStream;
+    return this.outputTarget;
   }
 
-  protected void setPrintStream(PrintStream newValue)
+  protected void setOutputTarget(LogMessageOutputTarget outputTarget)
   {
-    this.printStream = newValue;
+    this.outputTarget = outputTarget;
   }
 }

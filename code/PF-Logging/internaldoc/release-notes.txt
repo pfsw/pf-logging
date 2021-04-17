@@ -3,12 +3,18 @@ RELEASE NOTES FOR PACKAGE PF-Logging
 
 -------------------------------------------------------------------------------
 
-VERSION 3.4.0 (10/05/2020) - 60 Unit Tests, 71.7% Coverage
+VERSION 3.4.0 (12/04/2021) - 68 Unit Tests, 74.5% Coverage
 
 * PrintStreamLoggerFactory
   > Added capability to configure via system properties:
     - org.pfsw.logging.FILE
     - org.pfsw.logging.LEVEL
+
+* New types
+  > org.pfsw.logging.stdout.LogMessageOutputTarget
+  > org.pfsw.logging.stdout.LogMessageOutputPrintStream
+  > org.pfsw.logging.stdout.LogMessageOutputTargetRegistry
+  > org.pfsw.logging.stdout.PrintStreamOptions
 
 -------------------------------------------------------------------------------
 

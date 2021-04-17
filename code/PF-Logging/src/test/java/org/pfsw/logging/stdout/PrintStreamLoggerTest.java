@@ -9,18 +9,15 @@
 // ===========================================================================
 package org.pfsw.logging.stdout;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.Properties;
 
 import org.junit.Test;
 import org.pfsw.logging.Logger;
 import org.pfsw.logging.LoggerFactoryProvider;
 import org.pfsw.logging.internal.SystemPropertyName;
-import org.pfsw.logging.stdout.PrintStreamLogger;
 import org.pfsw.logging.testhelper.InMemoryPrintStream;
 
 /**
@@ -41,14 +38,14 @@ public class PrintStreamLoggerTest
     assertTrue(logger.isLoggingInfos());
     assertTrue(logger.isLoggingWarnings());
     assertTrue(logger.isLoggingErrors());
-  } 
+  }
 
   @Test
   public void test_logLevel_ERROR() throws Exception
   {
     Logger logger;
     Properties props = new Properties();
-    
+
     props.setProperty(PrintStreamLogger.PROP_LOG_LEVEL, "ERROR");
     logger = new PrintStreamLogger();
     logger.initialize(props);
@@ -56,8 +53,8 @@ public class PrintStreamLoggerTest
     assertTrue(!logger.isLoggingInfos());
     assertTrue(!logger.isLoggingWarnings());
     assertTrue(logger.isLoggingErrors());
-  } 
-  
+  }
+
   @Test
   public void test_logLevel_WARNING() throws Exception
   {
@@ -71,7 +68,7 @@ public class PrintStreamLoggerTest
     assertTrue(!logger.isLoggingInfos());
     assertTrue(logger.isLoggingWarnings());
     assertTrue(logger.isLoggingErrors());
-  } 
+  }
 
   @Test
   public void test_logLevel_INFO() throws Exception
@@ -86,7 +83,7 @@ public class PrintStreamLoggerTest
     assertTrue(logger.isLoggingInfos());
     assertTrue(logger.isLoggingWarnings());
     assertTrue(logger.isLoggingErrors());
-  } 
+  }
 
   @Test
   public void test_logLevel_DEBUG() throws Exception
@@ -101,7 +98,7 @@ public class PrintStreamLoggerTest
     assertTrue(logger.isLoggingInfos());
     assertTrue(logger.isLoggingWarnings());
     assertTrue(logger.isLoggingErrors());
-  } 
+  }
 
   @Test
   public void test_logLevel_DEBUG_via_system_property() throws Exception
@@ -110,13 +107,13 @@ public class PrintStreamLoggerTest
 
     System.setProperty(SystemPropertyName.LOG_LEVEL.asString(), "debug");
     logger = LoggerFactoryProvider.getLogger("dummy");
-    
+
     assertTrue(logger.isLoggingDebugs());
     assertTrue(logger.isLoggingInfos());
     assertTrue(logger.isLoggingWarnings());
     assertTrue(logger.isLoggingErrors());
-  } 
-  
+  }
+
   @Test
   public void test_logLevel_5() throws Exception
   {
@@ -130,7 +127,7 @@ public class PrintStreamLoggerTest
     assertTrue(!logger.isLoggingInfos());
     assertTrue(!logger.isLoggingWarnings());
     assertTrue(!logger.isLoggingErrors());
-  } 
+  }
 
   @Test
   public void test_setLogLevel_1() throws Exception
@@ -145,29 +142,29 @@ public class PrintStreamLoggerTest
     assertTrue(logger.setLogLevel("INFO"));
     assertTrue(logger.isLoggingInfos());
     assertTrue(!logger.setLogLevel("unknown"));
-  } 
+  }
 
   @Test
   public void test_getName_default() throws Exception
   {
     Logger logger;
-    
+
     logger = new PrintStreamLogger();
     assertEquals("", logger.getName());
-  } 
-  
+  }
+
   @Test
   public void test_getName_set_by_property() throws Exception
   {
     Logger logger;
     Properties props = new Properties();
-    
+
     props.setProperty(PrintStreamLogger.PROP_LOGGER_NAME, "myLogger");
     logger = new PrintStreamLogger();
     logger.initialize(props);
     assertEquals("myLogger", logger.getName());
-  } 
-  
+  }
+
   @Test
   public void test_getName_set_by_constructor() throws Exception
   {
@@ -175,43 +172,58 @@ public class PrintStreamLoggerTest
 
     logger = new PrintStreamLogger("best.logger.ever");
     assertEquals("best.logger.ever", logger.getName());
-  } 
-  
+  }
+
   @Test
   public void test_getName_override_by_property() throws Exception
   {
     Logger logger;
     Properties props = new Properties();
-    
+
     logger = new PrintStreamLogger("special.logger");
     props.setProperty(PrintStreamLogger.PROP_LOGGER_NAME, "what.a.logger");
     logger.initialize(props);
     assertEquals("what.a.logger", logger.getName());
-  } 
-  
+  }
+
   @Test
   public void test_that_logger_name_gets_written() throws Exception
   {
     PrintStreamLogger logger;
     InMemoryPrintStream memoryPrintStream;
-    
-    memoryPrintStream = new InMemoryPrintStream();
+
+    memoryPrintStream = InMemoryPrintStream.create();
     logger = new PrintStreamLogger("special.logger");
-    logger.setPrintStream(memoryPrintStream.getPrintStream());
+    logger.setOutputTarget(memoryPrintStream);
     logger.logError("What a mess!");
     assertEquals("E special.logger What a mess!\n", memoryPrintStream.getContent());
-  } 
-  
+    memoryPrintStream.close();
+  }
+
   @Test
   public void test_logError_with_placeholders() throws Exception
   {
     PrintStreamLogger logger;
     InMemoryPrintStream memoryPrintStream;
-    
+
     memoryPrintStream = new InMemoryPrintStream();
     logger = new PrintStreamLogger();
-    logger.setPrintStream(memoryPrintStream.getPrintStream());
+    logger.setOutputTarget(memoryPrintStream);
     logger.logError("The value of {0} is {1}, which is greater than {2}!", "maxSize", 6, 5L);
     assertEquals("E The value of maxSize is 6, which is greater than 5!\n", memoryPrintStream.getContent());
-  }  
-} 
+  }
+
+  @Test
+  public void test_logInfo_with_timestamp() throws Exception
+  {
+    PrintStreamLogger logger;
+    InMemoryPrintStream memoryPrintStream;
+
+    PrintStreamOptions.enableDefaultTimestampFormat();
+    memoryPrintStream = new InMemoryPrintStream();
+    logger = new PrintStreamLogger();
+    logger.setOutputTarget(memoryPrintStream);
+    logger.logInfo("Simple message");
+    assertTrue(memoryPrintStream.getContent().startsWith(PrintStreamOptions.formatTimestamp(new Date(), "yyyy-MM-dd")));
+  }
+}

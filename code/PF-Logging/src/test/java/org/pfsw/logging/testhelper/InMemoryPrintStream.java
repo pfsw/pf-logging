@@ -1,35 +1,43 @@
 // ===========================================================================
 // CONTENT  : CLASS InMemoryPrintStream
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 1.0 - 20/06/2014
+// VERSION  : 2.0 - 05/04/2021
 // HISTORY  :
 //  20/06/2014  mdu  CREATED
+//  05/04/2021  mdu   changed -> implements LogMessageOutputTarget
 //
-// Copyright (c) 2014, by MDCS. All rights reserved.
+// Copyright (c) 2014-2021, by MDCS. All rights reserved.
 // ===========================================================================
 package org.pfsw.logging.testhelper;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+
+import org.pfsw.logging.stdout.LogMessageOutputTarget;
 
 /**
  * Simple holder of a PrintStream and the underlying byte array with convenience
  * methods to get the written result as String.
  *
  * @author Manfred Duchrow
- * @version 1.0
+ * @version 2.0
  */
-public class InMemoryPrintStream
+public class InMemoryPrintStream implements LogMessageOutputTarget
 {
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
   private ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
   private PrintStream printStream;
+
+  // =========================================================================
+  // CLASS METHODS
+  // =========================================================================
+  public static InMemoryPrintStream create()
+  {
+    return new InMemoryPrintStream();
+  } 
 
   // =========================================================================
   // CONSTRUCTORS
@@ -39,10 +47,30 @@ public class InMemoryPrintStream
     super();
     this.printStream = new PrintStream(this.byteStream);
   } 
-
+  
   // =========================================================================
   // PUBLIC INSTANCE METHODS
   // =========================================================================
+  @SuppressWarnings("resource")
+  @Override
+  public void print(String string)
+  {
+    getPrintStream().print(string);
+  }
+  
+  @SuppressWarnings("resource")
+  @Override
+  public void printException(Throwable ex)
+  {
+    ex.printStackTrace(getPrintStream());
+  }
+  
+  @Override
+  public void close()
+  {
+    getPrintStream().close();
+  }
+  
   public PrintStream getPrintStream()
   {
     return printStream;
@@ -60,5 +88,11 @@ public class InMemoryPrintStream
       ex.printStackTrace();
       return "";
     }
+  }
+  
+  @Override
+  public String toString()
+  {
+    return String.format("%s()", getClass().getSimpleName());
   }
 }

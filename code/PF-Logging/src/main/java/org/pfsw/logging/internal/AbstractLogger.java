@@ -23,14 +23,14 @@ public abstract class AbstractLogger implements Logger
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
-  private String loggerName = "";
+  private String loggerName;
 
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
   public AbstractLogger()
   {
-    super();
+    this(ANONYMOUS_LOGGER_NAME);
   }
 
   public AbstractLogger(String loggerName)

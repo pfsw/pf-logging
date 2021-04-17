@@ -12,6 +12,7 @@
 package org.pfsw.logging.stdout;
 
 import static org.pfsw.logging.internal.SystemPropertyName.*;
+
 import java.util.Properties;
 
 import org.pfsw.logging.Logger;
@@ -51,13 +52,13 @@ public class PrintStreamLoggerFactory implements LoggerFactory
   @Override
   public Logger createLogger()
   {
-    return initLogger(new PrintStreamLogger());
+    return initLogger(PrintStreamLogger.create(Logger.ANONYMOUS_LOGGER_NAME));
   }
 
   @Override
   public Logger getLogger(String loggerName)
   {
-    return initLogger(new PrintStreamLogger(loggerName));
+    return initLogger(PrintStreamLogger.create(loggerName));
   }
 
   @Override
@@ -76,7 +77,7 @@ public class PrintStreamLoggerFactory implements LoggerFactory
   {
     Properties properties = new Properties();
     String value;
-    
+
     value = System.getProperty(LOG_LEVEL.asString());
     if (value != null)
     {
