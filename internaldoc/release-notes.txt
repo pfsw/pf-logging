@@ -3,6 +3,12 @@ RELEASE NOTES FOR PACKAGE PF-Logging
 
 -------------------------------------------------------------------------------
 
+VERSION 3.5.0 (19/09/2022) - 69 Unit Tests, 74.5% Coverage
+
+* Restructured and added signing of published artifacts
+
+-------------------------------------------------------------------------------
+
 VERSION 3.4.0 (07/01/2022) - 69 Unit Tests, 74.5% Coverage
 
 * PrintStreamLoggerFactory

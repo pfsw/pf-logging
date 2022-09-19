@@ -1,8 +1,11 @@
+plugins {
+  id 'signing'
+}
 apply plugin: 'java'
 
 def includePath = project.pfswGradleIncludePath // usually specified in $GRADLE_USER_HOME/gradle.properties
 
-version = '3.4.0'
+version = '3.5.0'
 archivesBaseName = "pf-logging"
 
 ext {
@@ -17,6 +20,10 @@ apply from: "${includePath}/common/repositories.gradle"
 apply from: "${includePath}/java/java-6-compile.gradle"
 apply from: "${includePath}/java/java-compatibility.gradle"
 apply from: "${includePath}/java/publishing-java-full.gradle"
+
+signing {
+  sign publishing.publications.mavenJava
+}
 
 dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.12'
