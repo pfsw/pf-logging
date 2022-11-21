@@ -10,11 +10,8 @@
 // ===========================================================================
 package org.pfsw.logging.jul;
 
+import org.pfsw.logging.BuiltInLogBindingId;
 import org.pfsw.logging.Logger;
-import org.pfsw.logging.LoggerBindingNames;
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import org.pfsw.logging.LoggerFactory;
 
 /**
@@ -32,23 +29,23 @@ public class JavaUtilLoggerFactory implements LoggerFactory
   public JavaUtilLoggerFactory()
   {
     super();
-  } // JavaUtilLoggerFactory()
-  
+  }
+
   // =========================================================================
   // PUBLIC INSTANCE METHODS
   // =========================================================================  
   @Override
   public String getName()
   {
-    return LoggerBindingNames.JUL;
+    return BuiltInLogBindingId.JUL.asString();
   }
-  
+
   @Override
   public Logger createLogger()
   {
     return new JavaUtilLoggerAdapter();
   }
-  
+
   @Override
   public Logger getLogger(String loggerName)
   {

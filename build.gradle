@@ -9,7 +9,7 @@ version = '3.5.0'
 archivesBaseName = "pf-logging"
 
 ext {
-  javaVersion = '1.6'
+  javaVersion = '6'
   javaModuleNameSuffix = 'logging'
   localTestLibDir = "${buildDir}/test-libs"
   localTestArchive = "pf-logging-test-plugins.jar"
@@ -17,19 +17,16 @@ ext {
 
 apply from: "${includePath}/common/ext-variables.gradle"
 apply from: "${includePath}/common/repositories.gradle"
-apply from: "${includePath}/java/java-6-compile.gradle"
+apply from: "${includePath}/java/java-${javaVersion}-compile.gradle"
 apply from: "${includePath}/java/java-compatibility.gradle"
 apply from: "${includePath}/java/publishing-java-full.gradle"
-
-signing {
-  sign publishing.publications.mavenJava
-}
+apply from: "${includePath}/java/sign-publications.gradle"
 
 dependencies {
-  testCompile group: 'junit', name: 'junit', version: '4.12'
-  testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+  testImplementation group: 'junit', name: 'junit', version: junit4Version
+  testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: hamcrestVersion
 }
 
-wrapper { gradleVersion = '6.3' }
+wrapper { gradleVersion = '6.9' }
 
 println "${project.name} ${project.version} (autoModuleName: ${autoModuleName})"

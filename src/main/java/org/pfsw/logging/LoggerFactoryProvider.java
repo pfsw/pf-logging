@@ -1,20 +1,23 @@
 // ===========================================================================
 // CONTENT  : CLASS LoggerFactoryProvider
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 2.2 - 04/03/2017
+// VERSION  : 3.0 - 21/11/2022
 // HISTORY  :
 //  21/06/2014  mdu  CREATED
 //  13/12/2015  mdu   changed -> using registry
 //  03/02/2017  mdu   added   -> initialization mechanism via LogBindingInitializer
 //  04/03/2017  mdu   added   -> getLogger(), getLogger2()
+//  21/11/2022  mdu   added   -> getLoggerFactory(LogBindingId logBindingId)
 //
-// Copyright (c) 2014-2017, by MDCS. All rights reserved.
+// Copyright (c) 2014-2022, by MDCS. All rights reserved.
 // ===========================================================================
 package org.pfsw.logging;
 
+import java.util.List;
 import java.util.ServiceLoader;
 
 import org.pfsw.logging.deferred.DeferredInitializationLoggerFactory;
+import org.pfsw.logging.internal.SystemPropertyName;
 import org.pfsw.logging.jul.JavaUtilLoggerFactory;
 import org.pfsw.logging.nil.NilLoggerFactory;
 import org.pfsw.logging.stdout.PrintStreamLoggerFactory;
@@ -27,15 +30,15 @@ import org.pfsw.logging.stdout.PrintStreamLoggerFactory;
  * If this property is not specified, the default factory will be "STDOUT".
  *
  * @author Manfred Duchrow
- * @version 2.2
+ * @version 3.0
  */
 public class LoggerFactoryProvider
 {
   // =========================================================================
   // CONSTANTS
   // =========================================================================
+  public static final String DEFAULT_FACTORY_NAME = BuiltInLogBindingId.STDOUT.asString();
   private static final LoggerFactoryRegistry REGISTRY = new LoggerFactoryRegistry();
-  private static final String DEFAULT_FACTORY_NAME = LoggerBindingNames.STDOUT;
 
   // =========================================================================
   // CLASS VARIABLES
@@ -47,12 +50,11 @@ public class LoggerFactoryProvider
   // =========================================================================
   static
   {
-    loadLoggerFactoryRegistry();
-    reset();
+    initialize();
   }
 
   // -------------------------------------------------------------------------
-  
+
   /**
    * Returns a logger instance corresponding to the full qualifies name of the given class.
    * If it does not exist yet, it will be created.
@@ -76,7 +78,7 @@ public class LoggerFactoryProvider
   {
     return getLoggerFactory().getLogger(loggerName);
   }
-  
+
   /**
    * Returns a logger instance corresponding to the full qualifies name of the given class.
    * If it does not exist yet, it will be created.
@@ -88,7 +90,7 @@ public class LoggerFactoryProvider
   {
     return new Logger2Logger(getLogger(clazz));
   }
-  
+
   /**
    * Returns a logger instance corresponding to the given name.
    * If it does not exist yet, it will be created.
@@ -100,7 +102,7 @@ public class LoggerFactoryProvider
   {
     return new Logger2Logger(getLogger(loggerName));
   }
-  
+
   /**
    * Returns the default logger factory (i.e. the logger factory corresponding 
    * to the default name). 
@@ -124,7 +126,7 @@ public class LoggerFactoryProvider
   public static LoggerFactory getLoggerFactory(String name)
   {
     LoggerFactory factory;
-    
+
     if (name == null)
     {
       throw new IllegalArgumentException("The name for a logger factory must not be null!");
@@ -138,21 +140,53 @@ public class LoggerFactoryProvider
   }
 
   /**
+   * Returns the logger factory with the given id or, if it cannot be found, a special factory that produces logger 
+   * that do all logging to stdout and try to load the desired factory later, as soon as it is available.
+   * <br>
+   * So this method never returns null.
+   * 
+   * @param logBindingId The unique id of the logger factory type (must not be null).
+   * @throws IllegalArgumentException If the given logBindingId is null.
+   */
+  public static LoggerFactory getLoggerFactory(LogBindingId logBindingId)
+  {
+    if (logBindingId == null)
+    {
+      throw new IllegalArgumentException("The log binding id for a logger factory must not be null!");
+    }
+    return getLoggerFactory(logBindingId.asString());
+  }
+
+  /**
+   * Reloads the registry of logger factories and set the initial default logger factory.
+   */
+  public static void initialize()
+  {
+    loadLoggerFactoryRegistry();
+    reset();
+  }
+
+  /**
    * Resets the default logger factory name to the value of system property
-   * "org.pfsw.logging.binding" or to "STDOUT". 
+   * "org.pfsw.logging.binding" of if not provided to one that is specified by dynamically loaded initializer
+   * or to the sole not built-in factory on the classpath or eventually if nothing else was found to "STDOUT". 
    */
   public static void reset()
   {
     String name;
     LogBindingInitializer initializer;
 
-    name = System.getProperty(LoggerBindingNames.PROP_BINDING_NAME);
+    name = System.getProperty(SystemPropertyName.LOG_BINDING_NAME.asString());
     if (name == null)
     {
       initializer = lookupInitializer();
       if (initializer != null)
       {
         name = initializer.getLoggerFactoryName().trim();
+      }
+      else
+      {
+        name = lookupSoleExternalBindingName();
       }
     }
     setDefaultFactoryName(name);
@@ -175,6 +209,18 @@ public class LoggerFactoryProvider
     }
   }
 
+  public static void setDefaultFactoryId(LogBindingId logBindingId)
+  {
+    if (logBindingId == null)
+    {
+      setDefaultFactoryName(null);
+    }
+    else
+    {
+      setDefaultFactoryName(logBindingId.asString());
+    }
+  }
+
   /**
    * Registers the given factory under its name (see {@link LoggerFactory#getName()}).
    */
@@ -183,10 +229,19 @@ public class LoggerFactoryProvider
     getRegistry().register(factory);
   }
 
+  /**
+   * Removes the factory with the given name from the registry.
+   */
+  public static void deregister(String name)
+  {
+    getRegistry().getFactoriesMap().remove(name);
+  }
+
   // -------------------------------------------------------------------------
 
   private static void loadLoggerFactoryRegistry()
   {
+    getRegistry().clear();
     registerDefaultLoggerFactories();
     registerDynamicLoggerFactories();
   }
@@ -194,7 +249,7 @@ public class LoggerFactoryProvider
   private static void registerDefaultLoggerFactories()
   {
     register(new NilLoggerFactory());
-    register(new PrintStreamLoggerFactory(LoggerBindingNames.STDOUT));
+    register(new PrintStreamLoggerFactory(BuiltInLogBindingId.STDOUT.asString()));
     register(new JavaUtilLoggerFactory());
   }
 
@@ -202,10 +257,10 @@ public class LoggerFactoryProvider
   {
     ServiceLoader<LoggerFactory> foundInstances;
     ClassLoader classLoader;
-    
+
     classLoader = getClassLoader();
     if (classLoader != null)
-    {      
+    {
       foundInstances = ServiceLoader.load(LoggerFactory.class, classLoader);
       for (LoggerFactory loggerFactory : foundInstances)
       {
@@ -220,7 +275,7 @@ public class LoggerFactoryProvider
     ServiceLoader<LogBindingInitializer> foundInstances;
     int prio = Integer.MIN_VALUE;
     ClassLoader classLoader;
-    
+
     classLoader = getClassLoader();
     if (classLoader != null)
     {
@@ -237,7 +292,16 @@ public class LoggerFactoryProvider
     }
     return initializer;
   }
-  
+
+  /**
+   * Look for an external (not built-in) log-binding and if there's only one, return its name.
+   */
+  private static String lookupSoleExternalBindingName()
+  {
+    List<LoggerFactory> notBuiltInFactories = getRegistry().getNotBuiltInFactories();
+    return (notBuiltInFactories.size() == 1) ? notBuiltInFactories.get(0).getName() : null;
+  }
+
   /**
    * Returns the first non-null classloader from the following order:
    * <ol>
@@ -281,13 +345,13 @@ public class LoggerFactoryProvider
       }
     }
     throw new NullPointerException("No non-null object found in the given array.");
-  } 
+  }
 
-  private static boolean notBlank(String string) 
+  private static boolean notBlank(String string)
   {
     return (string != null) && (string.trim().length() > 1);
   }
-  
+
   private static LoggerFactoryRegistry getRegistry()
   {
     return REGISTRY;
@@ -299,6 +363,6 @@ public class LoggerFactoryProvider
   private LoggerFactoryProvider()
   {
     super();
-  } 
+  }
 
-} 
+}

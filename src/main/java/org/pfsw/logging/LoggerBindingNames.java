@@ -1,11 +1,12 @@
 // ===========================================================================
 // CONTENT  : INTERFACE LoggerBindingNames
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 1.0 - 13/12/2015
+// VERSION  : 1.1 - 21/11/2022
 // HISTORY  :
 //  13/12/2015  mdu  CREATED
+//  21/11/2022  mdu  deprecated 
 //
-// Copyright (c) 2015, by MDCS. All rights reserved.
+// Copyright (c) 2015-2022, by MDCS. All rights reserved.
 // ===========================================================================
 package org.pfsw.logging ;
 
@@ -14,33 +15,29 @@ package org.pfsw.logging ;
  * known logging frameworks or some internal implementation by this component. 
  *
  * @author Manfred Duchrow
- * @version 1.0
+ * @version 1.1
+ * @deprecated Use enum {@link BuiltInLogBindingId} instead.
  */
+@Deprecated
 public interface LoggerBindingNames
 { 
-  /**
-   * This is the name of a system property that might be used to set the
-   * logging factory binding name.
-   */
-  public static final String PROP_BINDING_NAME = "org.pfsw.logging.binding";
-  
   /**
    * The LoggerFactory with this name binds to an implementation
    * that absorbs all log messages. 
    */
-  public static final String NIL = "NIL";
+  public static final String NIL = BuiltInLogBindingId.NIL.asString();
 
   /**
    * The LoggerFactory with this name binds to an implementation
    * that prints all log messages to stdout. 
    */
-  public static final String STDOUT = "STDOUT";
+  public static final String STDOUT = BuiltInLogBindingId.STDOUT.asString();
   
   /**
    * The LoggerFactory with this name binds to an implementation
    * that forwards all log output to JDK's built-in java.util.logging (JUL). 
    */
-  public static final String JUL = "JUL";
+  public static final String JUL = BuiltInLogBindingId.JUL.asString();
 
   /**
    * The LoggerFactory with this name binds to an implementation

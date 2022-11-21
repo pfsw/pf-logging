@@ -1,25 +1,13 @@
-// ===========================================================================
-// CONTENT  : TEST CLASS JavaUtilLoggerAdapterTest
-// AUTHOR   : Manfred Duchrow
-// VERSION  : 1.0 - 13/12/2015
-// HISTORY  :
-//  13/12/2015  mdu  CREATED
-//
-// Copyright (c) 2015, by MDCS. All rights reserved.
-// ===========================================================================
 package org.pfsw.logging.jul;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import static org.junit.Assert.*;
 
 import java.util.logging.Level;
 
 import org.junit.Test;
+import org.pfsw.logging.BuiltInLogBindingId;
 import org.pfsw.logging.LogLevel;
 import org.pfsw.logging.Logger;
-import org.pfsw.logging.LoggerBindingNames;
 import org.pfsw.logging.LoggerFactory;
 import org.pfsw.logging.LoggerFactoryProvider;
 
@@ -28,7 +16,7 @@ public class JavaUtilLoggerAdapterTest
   @Test
   public void test_getLogger()
   {
-    LoggerFactory factory = LoggerFactoryProvider.getLoggerFactory(LoggerBindingNames.JUL);
+    LoggerFactory factory = LoggerFactoryProvider.getLoggerFactory(BuiltInLogBindingId.JUL);
     Logger logger = factory.getLogger("dummy");
     assertTrue("Unexpected class: " + logger.getClass().getName(), logger instanceof JavaUtilLoggerAdapter);    
     assertEquals("dummy", logger.getName());    

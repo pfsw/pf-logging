@@ -10,6 +10,7 @@
 package org.pfsw.logging.internal;
 
 import java.text.MessageFormat;
+
 import org.pfsw.logging.Logger;
 
 /**

@@ -7,9 +7,11 @@
 //
 // Copyright (c) 2015, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.logging ;
+package org.pfsw.logging;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,21 +33,26 @@ class LoggerFactoryRegistry
   // =========================================================================
   public LoggerFactoryRegistry()
   {
-    super() ;
+    super();
   }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
   // =========================================================================
-  public void register(LoggerFactory loggerFactory) 
+  public void clear() 
+  {
+    getFactoriesMap().clear();
+  }
+  
+  public void register(LoggerFactory loggerFactory)
   {
     if (loggerFactory != null)
     {
       getFactoriesMap().put(loggerFactory.getName(), loggerFactory);
     }
   }
-  
-  public LoggerFactory getLoggerFactory(String name) 
+
+  public LoggerFactory getLoggerFactory(String name)
   {
     if (name == null)
     {
@@ -53,7 +60,24 @@ class LoggerFactoryRegistry
     }
     return getFactoriesMap().get(name);
   }
-  
+
+  /**
+   * Returns all registered factories that are not built-in (i.e. part of this library).
+   */
+  public List<LoggerFactory> getNotBuiltInFactories()
+  {
+    List<LoggerFactory> factories = new ArrayList<LoggerFactory>();
+
+    for (LoggerFactory factory : getFactoriesMap().values())
+    {
+      if (!BuiltInLogBindingId.isBuiltInLogBinding(factory.getName()))
+      {
+        factories.add(factory);
+      }
+    }
+    return factories;
+  }
+
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================

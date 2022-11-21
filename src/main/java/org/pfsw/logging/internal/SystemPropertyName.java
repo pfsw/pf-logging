@@ -18,8 +18,21 @@ package org.pfsw.logging.internal;
 public enum SystemPropertyName
 {
   //@formatter:off
+  /**
+   * This is the name of a system property that can be used to set the logging factory binding name.
+   */
+  LOG_BINDING_NAME("org.pfsw.logging.binding"),
+
+  /**
+   * A system property to specify the file to which the log out put must be written. 
+   */
   LOG_FILE("org.pfsw.logging.FILE"),
-  LOG_LEVEL("org.pfsw.logging.LEVEL");
+
+  /**
+   * A system property to specify the general log level for PF logging. 
+   */
+  LOG_LEVEL("org.pfsw.logging.LEVEL"),
+  ;
   //@formatter:on
 
   private final String propertyName;

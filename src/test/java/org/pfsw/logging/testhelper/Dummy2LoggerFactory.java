@@ -14,6 +14,8 @@ import org.pfsw.logging.LoggerFactory;
 
 public class Dummy2LoggerFactory implements LoggerFactory
 {
+  public static final String FACTORY_ID = "DUMMY2";
+  
   public Dummy2LoggerFactory()
   {
     super();
@@ -22,7 +24,7 @@ public class Dummy2LoggerFactory implements LoggerFactory
   @Override
   public String getName()
   {
-    return "DUMMY2";
+    return FACTORY_ID;
   }
 
   @Override

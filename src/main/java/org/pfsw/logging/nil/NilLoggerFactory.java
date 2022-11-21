@@ -9,8 +9,8 @@
 // ===========================================================================
 package org.pfsw.logging.nil;
 
+import org.pfsw.logging.BuiltInLogBindingId;
 import org.pfsw.logging.Logger;
-import org.pfsw.logging.LoggerBindingNames;
 import org.pfsw.logging.LoggerFactory;
 
 /**
@@ -40,7 +40,7 @@ public class NilLoggerFactory implements LoggerFactory
   @Override
   public String getName()
   {
-    return LoggerBindingNames.NIL;
+    return BuiltInLogBindingId.NIL.asString();
   }
 
   @Override
