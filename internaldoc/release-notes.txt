@@ -3,7 +3,7 @@ RELEASE NOTES FOR PACKAGE PF-Logging
 
 -------------------------------------------------------------------------------
 
-VERSION 3.5.0 (19/09/2022) - 71 Unit Tests, 75.2% Coverage
+VERSION 3.5.0 (30/09/2023) - 71 Unit Tests, 75.2% Coverage
 
 * Restructured and added signing of published artifacts
 
